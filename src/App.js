@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Route, Redirect, Switch} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import Login from './user/pages/Login';
+import Signup from './user/pages/Signup';
+import {AuthContext} from "./shared/auth-context";
+import {useAuth} from "./shared/auth-hook";
+
+const App = () => {
+
+    const {token, userId, login, logout} = useAuth();
+
+    let routes;
+    if (token) {
+        routes = (
+            <Switch>
+                <Route exact path="/login"> <Login/> </Route>
+                <Route exact path="/signup"> <Signup/> </Route>
+                <Redirect to="/"/>
+            </Switch>
+        );
+    } else {
+        routes = (
+            <Switch>
+                <Route exact path="/login"> <Login/> </Route>
+                <Route exact path="/signup"> <Signup/> </Route>
+                <Redirect to="/"/>
+            </Switch>
+        );
+    }
+
+    return (
+
+        <AuthContext.Provider value={{isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId}}>
+            <Router>
+                <main>
+                    <p> Hallo </p>
+                    {routes}
+                </main>
+            </Router>
+        </AuthContext.Provider>
+
+    );
+
+};
 
 export default App;
