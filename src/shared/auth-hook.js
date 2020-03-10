@@ -1,4 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
+import {decode} from 'jsonwebtoken';
 
 export const useAuth = () => {
 
@@ -8,7 +9,8 @@ export const useAuth = () => {
 
     const login = useCallback((uid, token, expirationDate) => {
         setToken(token);
-        const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+        const tokenInfo = decode(token, process.env.REACT_APP_JWT_KEY);
+        const tokenExpirationDate = expirationDate || new Date(tokenInfo.exp * 1000) || new Date(new Date().getTime() + 1000 * 60 * 60);
         setTokenExpirationDate(tokenExpirationDate);
         localStorage.setItem('userData', JSON.stringify({
             userId: uid,
@@ -17,7 +19,9 @@ export const useAuth = () => {
         }));
         setUserId(uid);
     }, []);
+
     const logout = useCallback(() => {
+        console.log("OUT");
         setToken(null);
         localStorage.setItem('userData', JSON.stringify({userId: null, token: null}));
         setUserId(null);

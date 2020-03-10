@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {BrowserRouter as Router, Route, Redirect, Switch} from "react-router-dom";
 
 import Login from './user/pages/Login';
@@ -8,14 +8,15 @@ import {useAuth} from "./shared/auth-hook";
 
 const App = () => {
 
+    const auth = useContext(AuthContext);
     const {token, userId, login, logout} = useAuth();
 
     let routes;
-    if (token) {
+    if (auth.isLoggedIn) {
         routes = (
             <Switch>
-                <Route exact path="/login"> <Login/> </Route>
-                <Route exact path="/signup"> <Signup/> </Route>
+                {/*<Route exact path="/login"> <Login/> </Route>*/}
+                {/*<Route exact path="/signup"> <Signup/> </Route>*/}
                 <Redirect to="/"/>
             </Switch>
         );
@@ -24,18 +25,23 @@ const App = () => {
             <Switch>
                 <Route exact path="/login"> <Login/> </Route>
                 <Route exact path="/signup"> <Signup/> </Route>
-                <Redirect to="/"/>
+                <Redirect to="/login"/>
             </Switch>
         );
     }
+
+    const logoutHandler = () => {
+        logout();
+    };
 
     return (
 
         <AuthContext.Provider value={{isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId}}>
             <Router>
                 <main>
-                    <p> Hallo </p>
+                    <br/>
                     {routes}
+                    {auth.isLoggedIn ? <button> Login </button> : <button onClick={logoutHandler}> Logout </button>}
                 </main>
             </Router>
         </AuthContext.Provider>
