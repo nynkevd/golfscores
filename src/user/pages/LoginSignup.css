@@ -1,0 +1,45 @@
+.ls-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.ls-image {
+    width: 50%;
+    height: 100%;
+    background: lightgreen;
+}
+
+.ls-form-wrapper {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-grow: 0;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ls-form {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ls-form > h2 {
+    align-self: flex-start;
+    margin-bottom: 25px;
+}
+
+.ls-form form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ls-form form button {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    align-self: center;
+}

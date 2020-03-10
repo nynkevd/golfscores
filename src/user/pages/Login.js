@@ -1,6 +1,8 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../shared/auth-context";
-import {isMinLength} from "../../shared/validators";
+import {isMinLength, checkFormValid} from "../../shared/validators";
+
+import './LoginSignup.css';
 
 const Login = () => {
     const auth = useContext(AuthContext);
@@ -18,7 +20,7 @@ const Login = () => {
 
     const loginHandler = async (event) => {
         event.preventDefault();
-        let formValid = checkFormValid();
+        let formValid = checkFormValid(formState);
 
         if (formValid) {
             await fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
@@ -56,32 +58,33 @@ const Login = () => {
         }
     };
 
-    const checkFormValid = () => {
-        for (let field in formState) {
-            if (!formState[field].valid && field !== "formValid") {
-                console.log("nope " + field + "   " + field.valid);
-                return false;
-            }
-        }
-        return true;
-    };
-
     return (
         <React.Fragment>
-            <h2> Login </h2>
-            <form onSubmit={loginHandler}>
-                <label> Username </label>
-                <input name="username" onBlur={checkLength} minLength="5" type="text"/>
-                <label> Password </label>
-                <input name="password" onBlur={checkLength} minLength="6" type="text"/>
+            <div className="ls-page">
+                <div className="ls-image">
+                    <img src="./../../assets/sidegolf.jpg" alt="Afbeelding van een grasveld"/>
+                </div>
 
-                {error ? <p> {error} </p> : ""}
+                <div className="ls-form-wrapper">
+                    <div className="ls-form">
+                        <h2> Login </h2>
+                        <form onSubmit={loginHandler} autoComplete="off">
+                            <label> gebruikersnaam </label>
+                            <input name="username" onBlur={checkLength} minLength="5" type="text"/>
+                            <label> wachtwoord </label>
+                            <input name="password" onBlur={checkLength} minLength="6" type="password"/>
 
-                <button type="submit"> LOGIN</button>
+                            {error ? <p> {error} </p> : ""}
 
-                {auth.isLoggedIn ? <p> Logged in </p> : <p> Not logged in </p>}
+                            <button type="submit"> LOGIN</button>
+                        </form>
 
-            </form>
+                        <p> nog geen account? <a href="signup"> aanmelden </a></p>
+                    </div>
+                </div>
+            </div>
+
+
         </React.Fragment>
     )
 };

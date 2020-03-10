@@ -39,9 +39,8 @@ const App = () => {
         <AuthContext.Provider value={{isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId}}>
             <Router>
                 <main>
-                    <br/>
+                    {auth.isLoggedIn ? <button onClick={logoutHandler}> Logout </button> : null}
                     {routes}
-                    {auth.isLoggedIn ? <button> Login </button> : <button onClick={logoutHandler}> Logout </button>}
                 </main>
             </Router>
         </AuthContext.Provider>

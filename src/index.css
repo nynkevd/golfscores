@@ -1,13 +1,47 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
     font-family: 'Raleway', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: #101D21;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+    min-height: 100vh;
+}
+
+button {
+    background-color: #4C9F70;
+    color: white;
+    padding: 10px 20px;
+    border: 2px solid #4C9F70;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 3px;
+    width: fit-content;
+    margin: 0;
+}
+
+button.inverse {
+    background-color: white;
+    color: #4C9F70;
+}
+
+label {
+    margin-left: 0.5em;
+}
+
+input {
+    border: 1px #9EC1A3 solid;
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 1px;
+    margin: 8px 0;
+}
+
+input:focus {
+    outline: 2px #4C9F70 solid;
 }
