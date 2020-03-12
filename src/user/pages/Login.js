@@ -1,7 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../shared/auth-context";
+import {BrowserRouter as Redirect} from "react-router-dom";
 import {isMinLength, checkFormValid} from "../../shared/validators";
 
+import SideGolf from './../../assets/sidegolf.jpg';
 import './LoginSignup.css';
 
 const Login = () => {
@@ -17,6 +19,8 @@ const Login = () => {
         }
     });
     const [error, setError] = useState();
+
+    console.log(auth.isLoggedIn);
 
     const loginHandler = async (event) => {
         event.preventDefault();
@@ -36,6 +40,7 @@ const Login = () => {
                 .then(response => response.json())
                 .then(data => {
                     auth.login(data.userId, data.token);
+                    return <Redirect to="/signup"/>
                 })
                 .catch(() => {
                     setError("Deze gebruiker kan niet worden ingelogd, probeer opnieuw.");
@@ -43,10 +48,10 @@ const Login = () => {
         } else {
             setError("Gegevens kloppen niet.");
         }
-
     };
 
     const checkLength = (event) => {
+        setError(null);
         if (event.target.name in formState) {
             setFormState({
                 ...formState,
@@ -62,7 +67,7 @@ const Login = () => {
         <React.Fragment>
             <div className="ls-page">
                 <div className="ls-image">
-                    <img src="./../../assets/sidegolf.jpg" alt="Afbeelding van een grasveld"/>
+                    <img src={SideGolf} alt="Afbeelding van een grasveld"/>
                 </div>
 
                 <div className="ls-form-wrapper">
@@ -70,16 +75,20 @@ const Login = () => {
                         <h2> Login </h2>
                         <form onSubmit={loginHandler} autoComplete="off">
                             <label> gebruikersnaam </label>
-                            <input name="username" onBlur={checkLength} minLength="5" type="text"/>
+                            <input autoCorrect="off" autoCapitalize="none" name="username" onChange={checkLength}
+                                   minLength="5" type="text"/>
                             <label> wachtwoord </label>
-                            <input name="password" onBlur={checkLength} minLength="6" type="password"/>
+                            <input autoCorrect="off" autoCapitalize="none" name="password" onChange={checkLength}
+                                   minLength="6" type="current-password"/>
 
-                            {error ? <p> {error} </p> : ""}
+                            <br/>
+
+                            {error ? <p className="error ls-footer"> {error} </p> : ""}
 
                             <button type="submit"> LOGIN</button>
                         </form>
 
-                        <p> nog geen account? <a href="signup"> aanmelden </a></p>
+                        <p className="ls-footer"> nog geen account? <a href="signup"> aanmelden </a></p>
                     </div>
                 </div>
             </div>

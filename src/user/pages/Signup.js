@@ -1,8 +1,9 @@
-import React, {useContext, useState} from 'react';
+import React, {useState, useContext} from 'react';
 
 import {AuthContext} from "../../shared/auth-context";
-import {isMinLength, matches, checkFormValid} from "../../shared/validators";
+import {isMinLength, checkFormValid} from "../../shared/validators";
 
+import SideGolf2 from './../../assets/sidegolf2.jpg';
 import './LoginSignup.css';
 
 const Signup = () => {
@@ -27,6 +28,10 @@ const Signup = () => {
         }
     });
     const [error, setError] = useState();
+    const [nameError, setNameError] = useState();
+    const [usernameError, setUsernameError] = useState();
+    const [passwordError, setPasswordError] = useState();
+    const [repeatError, setRepeatError] = useState();
 
     console.log(JSON.stringify(formState));
 
@@ -36,25 +41,25 @@ const Signup = () => {
 
         if (formValid) {
             console.log("Creating user");
-            // await fetch(` ${process.env.REACT_APP_API_URL}/user/signup`, {
-            //     method: 'POST',
-            //     body: JSON.stringify({
-            //         name: formState.username.value,
-            //         username: formState.username.value,
-            //         password: formState.username.value
-            //     }),
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     }
-            // })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         console.log(data);
-            //         auth.login(data.userId, data.token);
-            //     })
-            //     .catch(() => {
-            //         setError("Er bestaat al een gebruiker met deze gebruikersnaam.");
-            //     });
+            await fetch(` ${process.env.REACT_APP_API_URL}/user/signup`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: formState.username.value,
+                    username: formState.username.value,
+                    password: formState.username.value
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    auth.login(data.userId, data.token);
+                })
+                .catch(() => {
+                    setError("Er bestaat al een gebruiker met deze gebruikersnaam.");
+                });
         } else {
             setError("Kan geen account maken, loop de gegevens na");
         }
@@ -71,6 +76,44 @@ const Signup = () => {
                 }
             });
         }
+
+        console.log(!isMinLength(event.target.value, event.target.minLength));
+        if (!isMinLength(event.target.value, event.target.minLength)) {
+            switch (event.target.name) {
+                case "name":
+                    setNameError("Naam moet minstens " + event.target.minLength + " karakter zijn.");
+                    break;
+                case "username":
+                    setUsernameError("Gebruikersnaam moet minstens " + event.target.minLength + " karakters zijn.");
+                    break;
+                case "password":
+                    setPasswordError("Wachtwoord moet minstens " + event.target.minLength + " karakters zijn.");
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (event.target.name) {
+                case "name":
+                    setNameError(null);
+                    break;
+                case "username":
+                    setUsernameError(null);
+                    break;
+                case "password":
+                    setPasswordError(null);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    const onEnterPress = (event) => {
+        if (event.keyCode === 13 && event.shiftKey === false) {
+            event.preventDefault();
+            event.target.blur();
+        }
     };
 
     const checkMatching = (event) => {
@@ -80,8 +123,7 @@ const Signup = () => {
         console.log(event.target.value === shouldMatch);
 
         if (!areEqual) {
-            console.log("Nope");
-            setError("Wachtwoorden komen niet overeen");
+            setRepeatError("Wachtwoorden komen niet overeen");
 
             setFormState({
                 ...formState,
@@ -100,7 +142,7 @@ const Signup = () => {
                     valid: true
                 }
             });
-            setError(null);
+            setRepeatError(null);
         }
     };
 
@@ -109,7 +151,7 @@ const Signup = () => {
         <React.Fragment>
             <div className="ls-page">
                 <div className="ls-image">
-                    <img src="../../../assets/sidegolf.jpg" alt="Afbeelding van een grasveld"/>
+                    <img src={SideGolf2} alt="Afbeelding van een grasveld"/>
                 </div>
 
                 <div className="ls-form-wrapper">
@@ -118,21 +160,34 @@ const Signup = () => {
                         <h2> Aanmelden </h2>
 
                         <form onSubmit={signupHandler} autoComplete="off">
-                            <label> Name </label>
-                            <input name="name" onBlur={checkLength} minLength="1" type="text"/>
-                            <label> Username </label>
-                            <input name="username" onBlur={checkLength} minLength="5" type="username"/>
-                            <label> Password </label>
-                            <input name="password" onBlur={checkLength} minLength="6" type="new-password"/>
-                            <label> Repeat Password </label>
-                            <input name="passwordRepeat" onBlur={checkMatching} match="password" type="new-password"/>
+                            <label> naam </label>
+                            <input autoCorrect="off" name="name" onBlur={checkLength} minLength="1" type="text"
+                                   onKeyDown={onEnterPress}/>
+                            {nameError ? <p className="warning"> {nameError} </p> : null}
 
-                            {error ? <p> {error} </p> : null}
+                            <label> gebruikersnaam </label>
+                            <input autoCorrect="off" autoCapitalize="none" name="username" onBlur={checkLength}
+                                   minLength="5" type="username" onKeyDown={onEnterPress}/>
+                            {usernameError ? <p className="warning"> {usernameError} </p> : null}
+
+                            <label> wachtwoord </label>
+                            <input autoCorrect="off" autoCapitalize="none" name="password" onBlur={checkLength}
+                                   minLength="6" type="password" onKeyDown={onEnterPress}/>
+                            {passwordError ? <p className="warning"> {passwordError} </p> : null}
+
+                            <label> herhaal wachtwoord </label>
+                            <input autoCorrect="off" autoCapitalize="none" name="passwordRepeat" onBlur={checkMatching}
+                                   match="password" type="password" onKeyDown={onEnterPress}/>
+                            {repeatError ? <p className="warning"> {repeatError} </p> : null}
+
+                            <br/>
+
+                            {error ? <p className="error ls-error"> {error} </p> : null}
 
                             <button type="submit"> AANMELDEN</button>
                         </form>
 
-                        <p> heb je al een account? <a href="/login"> inloggen </a></p>
+                        <p className="ls-footer"> heb je al een account? <a href="/login"> inloggen </a></p>
                     </div>
                 </div>
             </div>

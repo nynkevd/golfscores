@@ -5,6 +5,7 @@ import Login from './user/pages/Login';
 import Signup from './user/pages/Signup';
 import {AuthContext} from "./shared/auth-context";
 import {useAuth} from "./shared/auth-hook";
+import Dashboard from "./general/pages/Dashboard";
 
 const App = () => {
 
@@ -12,11 +13,11 @@ const App = () => {
     const {token, userId, login, logout} = useAuth();
 
     let routes;
-    if (auth.isLoggedIn) {
+
+    if (token) {
         routes = (
             <Switch>
-                {/*<Route exact path="/login"> <Login/> </Route>*/}
-                {/*<Route exact path="/signup"> <Signup/> </Route>*/}
+                <Route exact path="/"> <Dashboard/> </Route>
                 <Redirect to="/"/>
             </Switch>
         );
@@ -30,16 +31,11 @@ const App = () => {
         );
     }
 
-    const logoutHandler = () => {
-        logout();
-    };
-
     return (
 
         <AuthContext.Provider value={{isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId}}>
             <Router>
                 <main>
-                    {auth.isLoggedIn ? <button onClick={logoutHandler}> Logout </button> : null}
                     {routes}
                 </main>
             </Router>

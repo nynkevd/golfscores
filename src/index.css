@@ -13,6 +13,19 @@ body {
     min-height: 100vh;
 }
 
+p.warning {
+    color: #ECA400;
+    margin-bottom: 20px;
+    font-size: 90%;
+    font-weight: bolder;
+}
+
+p.error {
+    color: #ff0033;
+    font-size: 90%;
+    font-weight: bolder;
+}
+
 button {
     background-color: #4C9F70;
     color: white;
@@ -31,6 +44,7 @@ button.inverse {
 }
 
 label {
+    margin-top: 0.5em;
     margin-left: 0.5em;
 }
 
