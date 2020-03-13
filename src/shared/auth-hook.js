@@ -21,7 +21,6 @@ export const useAuth = () => {
     }, []);
 
     const logout = useCallback(() => {
-        console.log("OUT");
         setToken(null);
         localStorage.setItem('userData', JSON.stringify({userId: null, token: null}));
         setUserId(null);

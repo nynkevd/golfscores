@@ -20,8 +20,6 @@ const Login = () => {
     });
     const [error, setError] = useState();
 
-    console.log(auth.isLoggedIn);
-
     const loginHandler = async (event) => {
         event.preventDefault();
         let formValid = checkFormValid(formState);

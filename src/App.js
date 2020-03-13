@@ -6,10 +6,10 @@ import Signup from './user/pages/Signup';
 import {AuthContext} from "./shared/auth-context";
 import {useAuth} from "./shared/auth-hook";
 import Dashboard from "./general/pages/Dashboard";
+import UserInfo from "./user/pages/UserInfo";
 
 const App = () => {
 
-    const auth = useContext(AuthContext);
     const {token, userId, login, logout} = useAuth();
 
     let routes;
@@ -18,6 +18,7 @@ const App = () => {
         routes = (
             <Switch>
                 <Route exact path="/"> <Dashboard/> </Route>
+                <Route exact path="/userinfo"> <UserInfo/> </Route>
                 <Redirect to="/"/>
             </Switch>
         );

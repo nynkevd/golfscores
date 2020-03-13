@@ -59,3 +59,29 @@ input {
 input:focus {
     outline: 2px #4C9F70 solid;
 }
+
+hr {
+    border-top: rgba(158, 193, 163, 0.5) 1px solid;
+}
+
+.pageHeader {
+    height: 15vh;
+    width: 100%;
+}
+
+.pageHeader img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.pageContent {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.breadcrumbs {
+    margin: 25px 0;
+}

@@ -33,14 +33,11 @@ const Signup = () => {
     const [passwordError, setPasswordError] = useState();
     const [repeatError, setRepeatError] = useState();
 
-    console.log(JSON.stringify(formState));
-
     const signupHandler = async (event) => {
         event.preventDefault();
         let formValid = checkFormValid(formState);
 
         if (formValid) {
-            console.log("Creating user");
             await fetch(` ${process.env.REACT_APP_API_URL}/user/signup`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -54,7 +51,6 @@ const Signup = () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     auth.login(data.userId, data.token);
                 })
                 .catch(() => {
@@ -77,7 +73,6 @@ const Signup = () => {
             });
         }
 
-        console.log(!isMinLength(event.target.value, event.target.minLength));
         if (!isMinLength(event.target.value, event.target.minLength)) {
             switch (event.target.name) {
                 case "name":
@@ -117,10 +112,8 @@ const Signup = () => {
     };
 
     const checkMatching = (event) => {
-        console.log("Checking if matching");
         let shouldMatch = document.getElementsByName(event.target.getAttribute('match'))[0].value;
         let areEqual = event.target.value === shouldMatch;
-        console.log(event.target.value === shouldMatch);
 
         if (!areEqual) {
             setRepeatError("Wachtwoorden komen niet overeen");

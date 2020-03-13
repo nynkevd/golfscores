@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 
 import {AuthContext} from "../../shared/auth-context";
+import {Link} from "react-router-dom";
 
 const Dashboard = () => {
 
@@ -14,6 +15,10 @@ const Dashboard = () => {
         <React.Fragment>
 
             <br/> <br/>
+
+            <Link to="/userinfo">
+                <button> EDIT</button>
+            </Link>
 
             <button onClick={logoutHandler}> LOGOUT</button>
 

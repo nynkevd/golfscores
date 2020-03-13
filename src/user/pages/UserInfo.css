@@ -1,0 +1,22 @@
+.userinfo-page {
+    width: 50%;
+}
+
+.userinfo-page form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 50px;
+}
+
+.userinfo-page h1 {
+    margin: 25px 0;
+}
+
+.userinfo-page button[type="submit"] {
+    align-self: center;
+}
+
+.userinfo-page button#userinfo-logout {
+    margin: 50px 0;
+    align-self: center;
+}
