@@ -84,4 +84,19 @@ hr {
 
 .breadcrumbs {
     margin: 25px 0;
+    width: fit-content;
+}
+
+.success {
+    background: #9EC1A3;
+    padding: 1em;
+    color: white;
+    border: 1px solid #4C9F70;
+    margin-bottom: 2em;
+}
+
+@media only screen and (max-width: 1000px) {
+    .pageContent {
+        width: 90%;
+    }
 }

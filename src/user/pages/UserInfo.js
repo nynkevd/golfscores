@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {BrowserRouter as Redirect, Link} from "react-router-dom";
 
 import {AuthContext} from '../../shared/auth-context';
 import {checkFormValid, isMinLength} from "../../shared/validators";
@@ -7,6 +7,7 @@ import LoadingSpinner from "../../shared/components/LoadingSpinner";
 
 import TopGolf from "../../assets/sidegolf.jpg";
 import './UserInfo.css';
+import axios from "axios";
 
 const UserInfo = () => {
 
@@ -36,6 +37,7 @@ const UserInfo = () => {
     });
 
     const [error, setError] = useState();
+    const [success, setSuccess] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [nameError, setNameError] = useState();
     const [usernameError, setUsernameError] = useState();
@@ -122,33 +124,35 @@ const UserInfo = () => {
     useEffect(() => {
         (async function loadData() {
             setIsLoading(true);
-            await fetch(`${process.env.REACT_APP_API_URL}/user/userinfo/${auth.userId}`, {
+            await axios({
                 method: 'GET',
+                url: `${process.env.REACT_APP_API_URL}/user/userinfo/${auth.userId}`,
                 headers: {
-                    "authorization": `Bearer ${auth.token}`
+                    'X-Auth-Token': auth.token
                 }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    setFormState({
-                        ...formState,
-                        name: {
-                            value: data.name,
-                            valid: true
-                        },
-                        username: {
-                            value: data.username,
-                            valid: true
-                        }
-                    });
-
-                    document.getElementById('name').value = data.name;
-                    document.getElementById('username').value = data.username;
-
-                })
-                .catch((error) => {
-                    setError("Kon de data niet ophalen, probeer de pagina opnieuw te laden");
+            }).then((res) => {
+                setIsLoading(false);
+                console.log("res");
+                let data = res.data;
+                setFormState({
+                    ...formState,
+                    name: {
+                        value: data.name,
+                        valid: true
+                    },
+                    username: {
+                        value: data.username,
+                        valid: true
+                    }
                 });
+
+                document.getElementById('name').value = data.name;
+                document.getElementById('username').value = data.username;
+            }).catch((error) => {
+                setIsLoading(false);
+                console.log(error);
+                setError(error.response.data.message);
+            })
         })();
         setIsLoading(false);
     }, []);
@@ -156,34 +160,65 @@ const UserInfo = () => {
     const changeUserInfo = async (event) => {
         event.preventDefault();
         let formValid = checkFormValid(formState);
-        console.log(formValid);
         if (formValid) {
+            setIsLoading(true);
+            setSuccess(null);
             setError(null);
-            await fetch(`${process.env.REACT_APP_API_URL}/user/edit`, {
+
+            await axios({
                 method: 'PATCH',
-                body: JSON.stringify({
+                url: `${process.env.REACT_APP_API_URL}/user/edit`,
+                headers: {
+                    'X-Auth-Token': auth.token
+                },
+                data: {
                     name: formState.name.value,
                     username: formState.username.value,
                     currentPassword: formState.currentPassword.value,
                     newPassword: `${formState.newPassword.value ? formState.newPassword.value : formState.currentPassword.value}`
-                }),
-                headers: {
-                    "content-type": "application/json",
-                    "authorization": `Bearer ${auth.token}`
                 }
+            }).then((res) => {
+                setIsLoading(false);
+                console.log(res);
+                let data = res.data;
+                setSuccess(data.message);
+                let inputs = document.querySelectorAll("input[type='password']");
+                for (const input of inputs) {
+                    input.value = '';
+                }
+            }).catch((error) => {
+                setIsLoading(false);
+                console.log(error);
+                setError(error.response.data.message);
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(JSON.stringify({
-                        name: formState.name.value,
-                        username: formState.username.value,
-                        currentPassword: formState.currentPassword.value,
-                        newPassword: formState.newPassword.value
-                    }))
-                })
-                .catch((error) => {
-                    setError("error");
-                });
+
+
+            // await fetch(`${process.env.REACT_APP_API_URL}/user/edit`, {
+            //     method: 'PATCH',
+            //     body: JSON.stringify({
+            //         name: formState.name.value,
+            //         username: formState.username.value,
+            //         currentPassword: formState.currentPassword.value,
+            //         newPassword: `${formState.newPassword.value ? formState.newPassword.value : formState.currentPassword.value}`
+            //     }),
+            //     headers: {
+            //         "content-type": "application/json",
+            //         "authorization": `Bearer ${auth.token}`
+            //     }
+            // })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         setIsLoading(false);
+            //         setSuccess(data.message);
+            //         let inputs = document.querySelectorAll("input[type='password']");
+            //         for (const input of inputs) {
+            //             input.value = '';
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         setIsLoading(false);
+            //         setError(error.message);
+            //     });
         } else {
             setError("Kan gegevens niet versturen, loop de velden na.");
         }
@@ -204,19 +239,19 @@ const UserInfo = () => {
 
             <div className="pageContent userinfo-page">
 
-                <Link to="/"><p className="breadcrumbs"> &#60; terug naar dashboard </p></Link>
+                <Link className="breadcrumbs" to="/"><p> &#60; terug naar dashboard </p></Link>
 
                 <h1> Account </h1>
 
                 <form onSubmit={changeUserInfo} autoComplete="off">
                     <label> naam </label>
                     <input id="name" autoCorrect="off" name="name" onBlur={checkLength} minLength="1" type="text"
-                           onKeyDown={onEnterPress}/>
+                           onKeyDown={onEnterPress} required/>
                     {nameError ? <p className="warning"> {nameError} </p> : null}
 
                     <label> gebruikersnaam </label>
                     <input id="username" autoCorrect="off" autoCapitalize="none" name="username" onBlur={checkLength}
-                           minLength="5" type="username" onKeyDown={onEnterPress}/>
+                           minLength="5" type="username" onKeyDown={onEnterPress} required/>
                     {usernameError ? <p className="warning"> {usernameError} </p> : null}
 
                     <br/> <br/>
@@ -239,11 +274,12 @@ const UserInfo = () => {
 
                     <label> huidig wachtwoord </label>
                     <input autoCorrect="off" autoCapitalize="none" name="currentPassword" onBlur={checkLength}
-                           type="password" onKeyDown={onEnterPress}/>
+                           type="password" onKeyDown={onEnterPress} required/>
 
                     <br/>
 
-                    {error ? <p className="error ls-error"> {error} </p> : null}
+                    {error ? <p className="error userinfo-error"> {error} </p> : null}
+                    {success ? <p className="success"> {success} </p> : null}
 
                     <button type="submit"> OPSLAAN</button>
                 </form>

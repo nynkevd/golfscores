@@ -5,6 +5,8 @@ import {isMinLength, checkFormValid} from "../../shared/validators";
 
 import SideGolf2 from './../../assets/sidegolf2.jpg';
 import './LoginSignup.css';
+import axios from "axios";
+import {BrowserRouter as Redirect} from "react-router-dom";
 
 const Signup = () => {
 
@@ -38,24 +40,25 @@ const Signup = () => {
         let formValid = checkFormValid(formState);
 
         if (formValid) {
-            await fetch(` ${process.env.REACT_APP_API_URL}/user/signup`, {
+
+            await axios({
                 method: 'POST',
-                body: JSON.stringify({
-                    name: formState.username.value,
+                url: `${process.env.REACT_APP_API_URL}/user/signup`,
+                header: {
+                    'content-type': 'application/json'
+                },
+                data: {
+                    name: formState.name.value,
                     username: formState.username.value,
-                    password: formState.username.value
-                }),
-                headers: {
-                    "Content-Type": "application/json"
+                    password: formState.password.value
                 }
+            }).then((res) => {
+                let data = res.data;
+                auth.login(data.userId, data.token);
+                return <Redirect to="/"/>
+            }).catch((error) => {
+                setError(error.response.data.message);
             })
-                .then(response => response.json())
-                .then(data => {
-                    auth.login(data.userId, data.token);
-                })
-                .catch(() => {
-                    setError("Er bestaat al een gebruiker met deze gebruikersnaam.");
-                });
         } else {
             setError("Kan geen account maken, loop de gegevens na");
         }
@@ -63,6 +66,7 @@ const Signup = () => {
     };
 
     const checkLength = (event) => {
+        setError(null);
         if (event.target.name in formState) {
             setFormState({
                 ...formState,
@@ -112,6 +116,7 @@ const Signup = () => {
     };
 
     const checkMatching = (event) => {
+        setError(null);
         let shouldMatch = document.getElementsByName(event.target.getAttribute('match'))[0].value;
         let areEqual = event.target.value === shouldMatch;
 

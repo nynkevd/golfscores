@@ -3,6 +3,8 @@ import {AuthContext} from "../../shared/auth-context";
 import {BrowserRouter as Redirect} from "react-router-dom";
 import {isMinLength, checkFormValid} from "../../shared/validators";
 
+import axios from 'axios';
+
 import SideGolf from './../../assets/sidegolf.jpg';
 import './LoginSignup.css';
 
@@ -25,24 +27,27 @@ const Login = () => {
         let formValid = checkFormValid(formState);
 
         if (formValid) {
-            await fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
+
+            await axios({
                 method: 'POST',
-                body: JSON.stringify({
+                url: `${process.env.REACT_APP_API_URL}/user/login`,
+                header: {
+                    'content-type': 'application/json'
+                },
+                data: {
                     username: formState.username.value,
                     password: formState.password.value
-                }),
-                headers: {
-                    "Content-Type": "application/json"
                 }
+            }).then((res) => {
+                let data = res.data;
+                auth.login(data.userId, data.token);
+                axios.defaults.headers['Content-Type'] = "application/json";
+                axios.defaults.headers['x-auth-token'] = data.token;
+                console.log(axios.defaults.headers);
+                return <Redirect to="/"/>
+            }).catch((error) => {
+                setError(error.response.data.message);
             })
-                .then(response => response.json())
-                .then(data => {
-                    auth.login(data.userId, data.token);
-                    return <Redirect to="/signup"/>
-                })
-                .catch(() => {
-                    setError("Deze gebruiker kan niet worden ingelogd, probeer opnieuw.");
-                });
         } else {
             setError("Gegevens kloppen niet.");
         }
@@ -77,7 +82,7 @@ const Login = () => {
                                    minLength="5" type="text"/>
                             <label> wachtwoord </label>
                             <input autoCorrect="off" autoCapitalize="none" name="password" onChange={checkLength}
-                                   minLength="6" type="current-password"/>
+                                   type="password"/>
 
                             <br/>
 
