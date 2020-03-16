@@ -20,6 +20,10 @@ const Signup = () => {
             value: '',
             valid: false
         },
+        description: {
+            value: "",
+            valid: true
+        },
         password: {
             value: '',
             valid: false
@@ -50,6 +54,7 @@ const Signup = () => {
                 data: {
                     name: formState.name.value,
                     username: formState.username.value,
+                    description: formState.description.value || "",
                     password: formState.password.value
                 }
             }).then((res) => {
@@ -166,6 +171,12 @@ const Signup = () => {
                             <label> gebruikersnaam </label>
                             <input autoCorrect="off" autoCapitalize="none" name="username" onBlur={checkLength}
                                    minLength="5" type="username" onKeyDown={onEnterPress}/>
+                            {usernameError ? <p className="warning"> {usernameError} </p> : null}
+
+                            <label> beschrijving </label>
+                            <textarea autoCorrect="off" name="description" onBlur={checkLength}
+                                      minLength="0" onKeyDown={onEnterPress}
+                                      placeholder="Voer hier overige informatie in die het makkelijker maakt voor anderen je te vinden. Zet hier geen vertrouwelijke informatie in. (optioneel)"/>
                             {usernameError ? <p className="warning"> {usernameError} </p> : null}
 
                             <label> wachtwoord </label>

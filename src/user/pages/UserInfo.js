@@ -22,6 +22,10 @@ const UserInfo = () => {
             value: '',
             valid: false
         },
+        description: {
+            value: '',
+            valid: true
+        },
         currentPassword: {
             value: '',
             valid: false
@@ -136,11 +140,16 @@ const UserInfo = () => {
                     username: {
                         value: data.username,
                         valid: true
+                    },
+                    description: {
+                        value: data.description,
+                        valid: true
                     }
                 });
 
                 document.getElementById('name').value = data.name;
                 document.getElementById('username').value = data.username;
+                document.getElementById('description').value = data.description;
             }).catch((error) => {
                 setIsLoading(false);
                 console.log(error);
@@ -167,6 +176,7 @@ const UserInfo = () => {
                 data: {
                     name: formState.name.value,
                     username: formState.username.value,
+                    description: formState.description.value || "",
                     currentPassword: formState.currentPassword.value,
                     newPassword: `${formState.newPassword.value ? formState.newPassword.value : formState.currentPassword.value}`
                 }
@@ -217,6 +227,12 @@ const UserInfo = () => {
                     <label> gebruikersnaam </label>
                     <input id="username" autoCorrect="off" autoCapitalize="none" name="username" onBlur={checkLength}
                            minLength="5" type="username" onKeyDown={onEnterPress} required/>
+                    {usernameError ? <p className="warning"> {usernameError} </p> : null}
+
+                    <label> beschrijving </label>
+                    <textarea id="description" autoCorrect="off" name="description" onBlur={checkLength}
+                              minLength="0" onKeyDown={onEnterPress}
+                              placeholder="Voer hier overige informatie in die het makkelijker maakt voor anderen je te vinden. Zet hier geen vertrouwelijke informatie in. (optioneel)"/>
                     {usernameError ? <p className="warning"> {usernameError} </p> : null}
 
                     <br/> <br/>
