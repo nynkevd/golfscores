@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {BrowserRouter as Redirect, Link} from "react-router-dom";
 
 import {AuthContext} from '../../shared/auth-context';
-import {checkFormValid, isMinLength} from "../../shared/validators";
+import {checkFormValid, isMinLength, onEnterPress} from "../../shared/validators";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 
 import TopGolf from "../../assets/sidegolf.jpg";
@@ -83,13 +83,6 @@ const UserInfo = () => {
                 default:
                     break;
             }
-        }
-    };
-
-    const onEnterPress = (event) => {
-        if (event.keyCode === 13 && event.shiftKey === false) {
-            event.preventDefault();
-            event.target.blur();
         }
     };
 
@@ -191,34 +184,6 @@ const UserInfo = () => {
                 console.log(error);
                 setError(error.response.data.message);
             })
-
-
-            // await fetch(`${process.env.REACT_APP_API_URL}/user/edit`, {
-            //     method: 'PATCH',
-            //     body: JSON.stringify({
-            //         name: formState.name.value,
-            //         username: formState.username.value,
-            //         currentPassword: formState.currentPassword.value,
-            //         newPassword: `${formState.newPassword.value ? formState.newPassword.value : formState.currentPassword.value}`
-            //     }),
-            //     headers: {
-            //         "content-type": "application/json",
-            //         "authorization": `Bearer ${auth.token}`
-            //     }
-            // })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         setIsLoading(false);
-            //         setSuccess(data.message);
-            //         let inputs = document.querySelectorAll("input[type='password']");
-            //         for (const input of inputs) {
-            //             input.value = '';
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         setIsLoading(false);
-            //         setError(error.message);
-            //     });
         } else {
             setError("Kan gegevens niet versturen, loop de velden na.");
         }

@@ -14,3 +14,10 @@ export const checkFormValid = (formState) => {
     }
     return true;
 };
+
+export const onEnterPress = (event) => {
+    if (event.keyCode === 13 && event.shiftKey === false) {
+        event.preventDefault();
+        event.target.blur();
+    }
+};

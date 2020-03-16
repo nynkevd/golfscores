@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../shared/auth-context";
 import {BrowserRouter as Redirect} from "react-router-dom";
-import {isMinLength, checkFormValid} from "../../shared/validators";
+import {isMinLength, checkFormValid, onEnterPress} from "../../shared/validators";
 
 import axios from 'axios';
 

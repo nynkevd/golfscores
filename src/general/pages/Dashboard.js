@@ -17,7 +17,11 @@ const Dashboard = () => {
             <br/> <br/>
 
             <Link to="/userinfo">
-                <button> EDIT</button>
+                <button> EDIT USER</button>
+            </Link>
+
+            <Link to="/creategroup">
+                <button> CREATE GROUP</button>
             </Link>
 
             <button onClick={logoutHandler}> LOGOUT</button>

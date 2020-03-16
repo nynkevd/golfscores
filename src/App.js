@@ -7,6 +7,7 @@ import {AuthContext} from "./shared/auth-context";
 import {useAuth} from "./shared/auth-hook";
 import Dashboard from "./general/pages/Dashboard";
 import UserInfo from "./user/pages/UserInfo";
+import CreateGroup from "./groups/pages/CreateGroup";
 
 const App = () => {
 
@@ -19,7 +20,8 @@ const App = () => {
             <Switch>
                 <Route exact path="/"> <Dashboard/> </Route>
                 <Route exact path="/userinfo"> <UserInfo/> </Route>
-                <Redirect to="/"/>
+                <Route exact path="/creategroup"> <CreateGroup/> </Route>
+                {/*<Redirect to="/"/>*/}
             </Switch>
         );
     } else {
@@ -27,7 +29,7 @@ const App = () => {
             <Switch>
                 <Route exact path="/login"> <Login/> </Route>
                 <Route exact path="/signup"> <Signup/> </Route>
-                <Redirect to="/login"/>
+                {/*<Redirect to="/login"/>*/}
             </Switch>
         );
     }
