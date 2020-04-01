@@ -53,14 +53,14 @@ const Login = () => {
         }
     };
 
-    const checkLength = (event) => {
+    const changeForm = (event) => {
         setError(null);
         if (event.target.name in formState) {
             setFormState({
                 ...formState,
                 [event.target.name]: {
                     value: event.target.value,
-                    valid: isMinLength(event.target.value, event.target.minLength)
+                    valid: true
                 }
             });
         }
@@ -78,10 +78,10 @@ const Login = () => {
                         <h2> Login </h2>
                         <form onSubmit={loginHandler} autoComplete="off">
                             <label> gebruikersnaam </label>
-                            <input autoCorrect="off" autoCapitalize="none" name="username" onChange={checkLength}
-                                   minLength="5" type="text"/>
+                            <input autoCorrect="off" autoCapitalize="none" name="username" onChange={changeForm}
+                                   type="text"/>
                             <label> wachtwoord </label>
-                            <input autoCorrect="off" autoCapitalize="none" name="password" onChange={checkLength}
+                            <input autoCorrect="off" autoCapitalize="none" name="password" onChange={changeForm}
                                    type="password"/>
 
                             <br/>

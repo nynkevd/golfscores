@@ -177,7 +177,6 @@ const Signup = () => {
                             <textarea autoCorrect="off" name="description" onBlur={checkLength}
                                       minLength="0" onKeyDown={onEnterPress}
                                       placeholder="Voer hier overige informatie in die het makkelijker maakt voor anderen je te vinden. Zet hier geen vertrouwelijke informatie in. (optioneel)"/>
-                            {usernameError ? <p className="warning"> {usernameError} </p> : null}
 
                             <label> wachtwoord </label>
                             <input autoCorrect="off" autoCapitalize="none" name="password" onBlur={checkLength}

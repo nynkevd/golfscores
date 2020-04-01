@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
-
-import {AuthContext} from "../../shared/auth-context";
-import {Link} from "react-router-dom";
+import {useParams} from 'react-router-dom';
 import axios from "axios";
 
-const Dashboard = () => {
+import {AuthContext} from "../../shared/auth-context";
 
+const GroupInfo = () => {
+    let {groupName} = useParams();
     const auth = useContext(AuthContext);
-    const [isLoading, setIsLoading] = useState();
 
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         console.log(auth.token);
@@ -16,7 +16,7 @@ const Dashboard = () => {
             setIsLoading(true);
             await axios({
                 method: 'GET',
-                url: `${process.env.REACT_APP_API_URL}/user/dashboard`,
+                url: `${process.env.REACT_APP_API_URL}/group/groupinfo/${groupName}`,
                 headers: {
                     'X-Auth-Token': auth.token
                 }
@@ -27,28 +27,13 @@ const Dashboard = () => {
         setIsLoading(false);
     }, []);
 
-
-    const logoutHandler = () => {
-        auth.logout();
-    };
-
     return (
         <React.Fragment>
 
-            <br/> <br/>
-
-            <Link to="/userinfo">
-                <button> EDIT USER</button>
-            </Link>
-
-            <Link to="/creategroup">
-                <button> CREATE GROUP</button>
-            </Link>
-
-            <button onClick={logoutHandler}> LOGOUT</button>
+            <h1> {groupName} </h1>
 
         </React.Fragment>
     )
 };
 
-export default Dashboard;
+export default GroupInfo;

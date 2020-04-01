@@ -8,6 +8,7 @@ import {useAuth} from "./shared/auth-hook";
 import Dashboard from "./general/pages/Dashboard";
 import UserInfo from "./user/pages/UserInfo";
 import CreateGroup from "./groups/pages/CreateGroup";
+import GroupInfo from "./groups/pages/GroupInfo";
 
 const App = () => {
 
@@ -21,7 +22,8 @@ const App = () => {
                 <Route exact path="/"> <Dashboard/> </Route>
                 <Route exact path="/userinfo"> <UserInfo/> </Route>
                 <Route exact path="/creategroup"> <CreateGroup/> </Route>
-                {/*<Redirect to="/"/>*/}
+                <Route exact path="/info/:groupName"> <GroupInfo/> </Route>
+                <Redirect to="/"/>
             </Switch>
         );
     } else {
@@ -29,7 +31,7 @@ const App = () => {
             <Switch>
                 <Route exact path="/login"> <Login/> </Route>
                 <Route exact path="/signup"> <Signup/> </Route>
-                {/*<Redirect to="/login"/>*/}
+                <Redirect to="/login"/>
             </Switch>
         );
     }

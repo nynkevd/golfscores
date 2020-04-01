@@ -123,7 +123,7 @@ const UserInfo = () => {
             setIsLoading(true);
             await axios({
                 method: 'GET',
-                url: `${process.env.REACT_APP_API_URL}/user/userinfo/${auth.userId}`,
+                url: `${process.env.REACT_APP_API_URL}/user/userinfo`,
                 headers: {
                     'X-Auth-Token': auth.token
                 }
@@ -149,10 +149,9 @@ const UserInfo = () => {
 
                 document.getElementById('name').value = data.name;
                 document.getElementById('username').value = data.username;
-                document.getElementById('description').value = data.description;
+                document.getElementById('description').value = data.description || "";
             }).catch((error) => {
                 setIsLoading(false);
-                console.log(error);
                 setError(error.response.data.message);
             })
         })();

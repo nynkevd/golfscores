@@ -43,6 +43,10 @@ button.inverse {
     color: #4C9F70;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 label {
     margin-top: 0.5em;
     margin-left: 0.5em;
