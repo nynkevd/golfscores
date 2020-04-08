@@ -43,6 +43,12 @@ button.inverse {
     color: #4C9F70;
 }
 
+button.negative {
+    background-color: white;
+    color: #ff0033;
+    border: 2px solid #ff0033;
+}
+
 button:hover {
     cursor: pointer;
 }

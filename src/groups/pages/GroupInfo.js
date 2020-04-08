@@ -5,7 +5,7 @@ import axios from "axios";
 import {AuthContext} from "../../shared/auth-context";
 
 const GroupInfo = () => {
-    let {groupName} = useParams();
+    let {groupId} = useParams();
     const auth = useContext(AuthContext);
 
     const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ const GroupInfo = () => {
             setIsLoading(true);
             await axios({
                 method: 'GET',
-                url: `${process.env.REACT_APP_API_URL}/group/groupinfo/${groupName}`,
+                url: `${process.env.REACT_APP_API_URL}/group/groupinfo/${groupId}`,
                 headers: {
                     'X-Auth-Token': auth.token
                 }
@@ -30,7 +30,7 @@ const GroupInfo = () => {
     return (
         <React.Fragment>
 
-            <h1> {groupName} </h1>
+            <h1> {groupId} </h1>
 
         </React.Fragment>
     )

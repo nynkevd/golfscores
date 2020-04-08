@@ -1,0 +1,47 @@
+.invite {
+    padding: 20px;
+    margin: 20px;
+    border: #9EC1A3 2px solid;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.invite > * > * {
+    margin-bottom: 0.5em;
+}
+
+.invite h2 {
+    font-size: 1em;
+}
+
+.invite em {
+    min-width: 80px;
+}
+
+.invite p {
+    display: flex;
+}
+
+.invite p:first-of-type {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.invite button {
+    font-size: 80%;
+}
+
+.invite div:last-of-type {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
+.invite div button:first-of-type {
+    margin-right: 2em;
+}

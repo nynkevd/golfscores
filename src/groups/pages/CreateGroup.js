@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from 'axios';
 
 import {AuthContext} from "../../shared/auth-context";
@@ -11,6 +11,7 @@ import UserSearchResults from "../components/UserSearchResults";
 
 const CreateGroup = () => {
     const auth = useContext(AuthContext);
+    const history = useHistory();
 
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState();
@@ -44,12 +45,16 @@ const CreateGroup = () => {
                 }
             }).then((res) => {
                 console.log(res);
+                setIsLoading(false);
+                console.log(res.data.groupId);
+                let link = `/groupinfo/${res.data.groupId}`;
+                history.push(link);
+
             }).catch((error) => {
                 console.log(error.response.data.message);
                 setError(error.response.data.message);
-            }).then(() => {
                 setIsLoading(false);
-            });
+            })
         }
     };
 

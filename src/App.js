@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Redirect, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import Login from './user/pages/Login';
 import Signup from './user/pages/Signup';
@@ -22,8 +22,8 @@ const App = () => {
                 <Route exact path="/"> <Dashboard/> </Route>
                 <Route exact path="/userinfo"> <UserInfo/> </Route>
                 <Route exact path="/creategroup"> <CreateGroup/> </Route>
-                <Route exact path="/info/:groupName"> <GroupInfo/> </Route>
-                <Redirect to="/"/>
+                <Route exact path="/groupinfo/:groupId"> <GroupInfo/> </Route>
+                {/*<Redirect to="/"/>*/}
             </Switch>
         );
     } else {
@@ -31,7 +31,7 @@ const App = () => {
             <Switch>
                 <Route exact path="/login"> <Login/> </Route>
                 <Route exact path="/signup"> <Signup/> </Route>
-                <Redirect to="/login"/>
+                {/*<Redirect to="/login"/>*/}
             </Switch>
         );
     }
