@@ -1,3 +1,49 @@
 .cg-searchbar {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cg-searchbar input {
+    width: 100%;
+    margin-right: 20px;
+}
+
+.cg-players {
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.cg-submit {
+    margin: 3em 0;
+}
+
+.cg-invited {
+    margin-top: 1em;
+}
+
+.cg-invited button {
+    border-width: 1px;
+    text-align: center;
+    padding: 5px 10px;
+    margin-right: 0.5em;
+    font-size: 90%;
+}
+
+.cg-invited p {
+    margin: 0.5em 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .cg-invited {
+        border-bottom: #9EC1A3 1px solid;
+        margin-bottom: 2em;
+        padding-bottom: 2em;
+    }
+
+    .cg-players {
+        grid-template-columns: 1fr;
+    }
 }

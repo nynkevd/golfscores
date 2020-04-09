@@ -6,13 +6,14 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import GroupInvite from "../../groups/components/GroupInvite";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import GroupItem from "../../groups/components/GroupItem";
 
 const Dashboard = () => {
 
     const auth = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState();
     const [isInviteLoading, setIsInviteLoading] = useState();
-    const [invites, setInvites] = useState();
+    const [invites, setInvites] = useState(null);
     const [groups, setGroups] = useState();
 
 
@@ -54,11 +55,13 @@ const Dashboard = () => {
                 </Link>
 
                 <h2> Groepen </h2>
-                {groups ? groups.map(group => <p key={group}> {group} </p>) :
-                    <p> Geen groepen gevonden, maak <a href="/creategroup"> hier </a> een eigen groep aan. </p>}
+                <div className="groups grid">
+                    {groups ? groups.map(group => <GroupItem key={group} groupId={group}> </GroupItem>) :
+                        <p> Geen groepen gevonden, maak <a href="/creategroup"> hier </a> een eigen groep aan. </p>}
+                </div>
 
                 <h2> Uitnodigingen </h2>
-                <div className="invites">
+                <div className="invites grid">
                     {invites ? invites.map(invite => <GroupInvite setIsInviteLoading={setIsInviteLoading}
                                                                   inviteId={invite} key={invite}/>) :
                         <p> Momenteel geen uitnodigingen </p>}

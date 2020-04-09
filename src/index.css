@@ -38,6 +38,11 @@ button {
     margin: 0;
 }
 
+button.secondary {
+    background-color: #9EC1A3;
+    border-color: #9EC1A3;
+}
+
 button.inverse {
     background-color: white;
     color: #4C9F70;
@@ -81,6 +86,10 @@ hr {
     border-top: rgba(158, 193, 163, 0.5) 1px solid;
 }
 
+ul {
+    padding: 0;
+}
+
 .pageHeader {
     height: 15vh;
     width: 100%;
@@ -111,6 +120,24 @@ hr {
     border: 1px solid #4C9F70;
     margin-bottom: 2em;
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media only screen and (max-width: 1200px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 @media only screen and (max-width: 1000px) {
     .pageContent {

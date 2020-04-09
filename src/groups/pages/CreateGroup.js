@@ -8,6 +8,7 @@ import {isMinLength, onEnterPress} from "../../shared/validators";
 import TopGolf from "../../assets/sidegolf2.jpg";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import UserSearchResults from "../components/UserSearchResults";
+import "./CreateGroup.css";
 
 const CreateGroup = () => {
     const auth = useContext(AuthContext);
@@ -27,6 +28,7 @@ const CreateGroup = () => {
         },
         invites: []
     });
+    const [invitedPlayers, setInvitedPlayers] = useState([]);
 
     const createGroup = async (event) => {
         setError(null);
@@ -59,6 +61,7 @@ const CreateGroup = () => {
     };
 
     const searchUsers = async () => {
+        console.log(invitedPlayers);
         setIsSearchLoading(true);
         setLoadedUsers(undefined);
         setSearchError(null);
@@ -72,8 +75,10 @@ const CreateGroup = () => {
             }).then((res) => {
                 setIsSearchLoading(false);
                 let data = res.data;
-                if (data) {
+                if (data.length > 0) {
                     setLoadedUsers(data);
+                } else {
+                    setSearchError("Er zijn geen gebruikers gevonden");
                 }
             }).catch((error) => {
                 console.log(error);
@@ -82,7 +87,7 @@ const CreateGroup = () => {
             })
         } else {
             setIsSearchLoading(false);
-            setSearchError("Voer iets in");
+            setSearchError("Voer iets in om te zoeken");
         }
 
     };
@@ -92,6 +97,19 @@ const CreateGroup = () => {
             ...formState,
             invites: formState.invites.concat(userId)
         });
+    };
+
+    const removePlayer = (userId) => {
+        setFormState({
+            ...formState,
+            invites: formState.invites.filter((inviteUserId) => inviteUserId !== userId)
+        });
+        setInvitedPlayers(
+            invitedPlayers.filter((inviteUser) => inviteUser.userId !== userId),
+        );
+
+        console.log(invitedPlayers);
+
     };
 
     const handleSearchValue = (event) => {
@@ -134,27 +152,48 @@ const CreateGroup = () => {
                 <h1> Groep Aanmaken</h1>
 
                 <form autoComplete="off" onSubmit={createGroup}>
-                    <label> titel </label>
+                    <label> Titel </label>
                     <input autoCorrect="off" name="title" onBlur={checkLength} minLength="5" type="text"
                            onKeyDown={onEnterPress} required/>
                     {nameError ? <p className="warning"> {nameError} </p> : null}
 
+                    <div className="cg-players">
 
-                    <label> zoek spelers </label>
-                    <div className="cg-searchbar">
-                        <input autoCorrect="off" name="search" onBlur={handleSearchValue} minLength="1" type="text"
-                               onKeyDown={onEnterPress}/>
-                        <button type="button" onClick={searchUsers}> ZOEK</button>
+                        <div className="cg-invited">
+                            <h2> Toegevoegd: </h2>
+                            <br/>
+                            {invitedPlayers.map(player => <p key={player.userId}>
+                                <button type="button" className="negative"
+                                        onClick={() => removePlayer(player.userId)}> X
+                                </button>
+                                {player.name} </p>)}
+                        </div>
+
+                        <div className="cg-searching">
+
+                            <label> Zoek spelers </label>
+                            <div className="cg-searchbar">
+                                <input autoCorrect="off" name="search" onBlur={handleSearchValue} minLength="1"
+                                       type="text"
+                                       onKeyDown={onEnterPress}/>
+                                <button type="button" onClick={searchUsers}>ZOEK</button>
+                            </div>
+
+                            <div>
+                                {loadedUsers ? <UserSearchResults items={loadedUsers} addUser={addUser}
+                                                                  invitedPlayers={invitedPlayers}
+                                                                  setInvitedPlayers={setInvitedPlayers}/> : null}
+                                {searchError ? <p className="warning"> {searchError} </p> : null}
+                                {isSearchLoading ? <LoadingSpinner/> : null}
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div>
-                        {loadedUsers ? <UserSearchResults items={loadedUsers} addUser={addUser}/> : null}
-                        {searchError ? <p className="warning"> {searchError} </p> : null}
-                        {isSearchLoading ? <LoadingSpinner/> : null}
-                    </div>
 
                     {error ? <p className="error"> {error} </p> : null}
-                    <button type="submit"> GROEP MAKEN</button>
+                    <button type="submit" className="cg-submit"> GROEP MAKEN</button>
 
                 </form>
             </div>

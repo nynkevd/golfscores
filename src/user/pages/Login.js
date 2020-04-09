@@ -77,10 +77,10 @@ const Login = () => {
                     <div className="ls-form">
                         <h2> Login </h2>
                         <form onSubmit={loginHandler} autoComplete="off">
-                            <label> gebruikersnaam </label>
+                            <label> Gebruikersnaam </label>
                             <input autoCorrect="off" autoCapitalize="none" name="username" onChange={changeForm}
                                    type="text"/>
-                            <label> wachtwoord </label>
+                            <label> Wachtwoord </label>
                             <input autoCorrect="off" autoCapitalize="none" name="password" onChange={changeForm}
                                    type="password"/>
 

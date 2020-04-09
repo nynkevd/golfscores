@@ -163,27 +163,27 @@ const Signup = () => {
                         <h2> Aanmelden </h2>
 
                         <form onSubmit={signupHandler} autoComplete="off">
-                            <label> naam </label>
+                            <label> Naam </label>
                             <input autoCorrect="off" name="name" onBlur={checkLength} minLength="1" type="text"
                                    onKeyDown={onEnterPress}/>
                             {nameError ? <p className="warning"> {nameError} </p> : null}
 
-                            <label> gebruikersnaam </label>
+                            <label> Gebruikersnaam </label>
                             <input autoCorrect="off" autoCapitalize="none" name="username" onBlur={checkLength}
                                    minLength="5" type="username" onKeyDown={onEnterPress}/>
                             {usernameError ? <p className="warning"> {usernameError} </p> : null}
 
-                            <label> beschrijving </label>
+                            <label> Beschrijving </label>
                             <textarea autoCorrect="off" name="description" onBlur={checkLength}
                                       minLength="0" onKeyDown={onEnterPress}
                                       placeholder="Voer hier overige informatie in die het makkelijker maakt voor anderen je te vinden. Zet hier geen vertrouwelijke informatie in. (optioneel)"/>
 
-                            <label> wachtwoord </label>
+                            <label> Wachtwoord </label>
                             <input autoCorrect="off" autoCapitalize="none" name="password" onBlur={checkLength}
                                    minLength="6" type="password" onKeyDown={onEnterPress}/>
                             {passwordError ? <p className="warning"> {passwordError} </p> : null}
 
-                            <label> herhaal wachtwoord </label>
+                            <label> Herhaal wachtwoord </label>
                             <input autoCorrect="off" autoCapitalize="none" name="passwordRepeat" onBlur={checkMatching}
                                    match="password" type="password" onKeyDown={onEnterPress}/>
                             {repeatError ? <p className="warning"> {repeatError} </p> : null}

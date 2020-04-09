@@ -1,13 +1,15 @@
 import React from 'react';
 
+import './UserSearchResults.css';
 import UserResultItem from "./UserResultItem";
 
 const UserSearchResults = props => {
     return (
-        <ul className="users-list">
+        <ul className="users-list grid">
             {props.items.map(user =>
-                <UserResultItem addUser={props.addUser} userId={user.userId} key={user.userId} name={user.name}
-                                username={user.username} description={user.description} invited={false}/>
+                <UserResultItem invitedPlayers={props.invitedPlayers} setInvitedPlayers={props.setInvitedPlayers}
+                                addUser={props.addUser} userId={user.userId} key={user.userId} name={user.name}
+                                username={user.username} description={user.description}/>
             )}
         </ul>
     )

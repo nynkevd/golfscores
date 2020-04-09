@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom";
 import axios from "axios";
 
 import "./GroupInvite.css";
@@ -8,6 +9,7 @@ import LoadingSpinner from "../../shared/components/LoadingSpinner";
 
 const GroupInvite = props => {
     const auth = useContext(AuthContext);
+    const history = useHistory();
     const [inviteInfo, setInviteInfo] = useState({groupName: '', inviter: '', inviteId: '', players: null});
     const [isUpdating, setIsUpdating] = useState();
 
@@ -45,9 +47,10 @@ const GroupInvite = props => {
         }).then((res) => {
             console.log(res);
             event.target.parentNode.parentNode.remove();
-            // TODO: Redirect naar nieuwe groep
+            let link = `/groupinfo/${res.data.groupId}`;
+            history.push(link);
         }).catch((error) => {
-            // console.log(error.response.data.message);
+            console.log(error.response.data.message);
         });
     };
 
@@ -61,21 +64,20 @@ const GroupInvite = props => {
             }
         }).then((res) => {
             event.target.parentNode.parentNode.remove();
-            // event.target.parentNode.remove();
         }).catch((error) => {
-            // console.log(error.response.data.message);
+            console.log(error.response.data.message);
         });
-    }
+    };
 
     return (
         <React.Fragment>
             <div className="invite">
                 <div>
-                    <p><em> voor: </em> {inviteInfo.groupName} </p>
-                    <p><em> door: </em> {inviteInfo.inviter} </p>
+                    <p><em> Voor: </em> {inviteInfo.groupName} </p>
+                    <p><em> Door: </em> {inviteInfo.inviter} </p>
                     {inviteInfo.players ?
                         inviteInfo.players.length > 0 ?
-                            <p><em> speler(s): </em> {inviteInfo.players.map(player => player + ", ")} </p> : null
+                            <p><em> Speler(s): </em> {inviteInfo.players.map(player => player + ", ")} </p> : null
                         : null}
                 </div>
 

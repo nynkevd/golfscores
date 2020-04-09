@@ -218,17 +218,17 @@ const UserInfo = () => {
                 <h1> Account </h1>
 
                 <form onSubmit={changeUserInfo} autoComplete="off">
-                    <label> naam </label>
+                    <label> Naam </label>
                     <input id="name" autoCorrect="off" name="name" onBlur={checkLength} minLength="1" type="text"
                            onKeyDown={onEnterPress} required/>
                     {nameError ? <p className="warning"> {nameError} </p> : null}
 
-                    <label> gebruikersnaam </label>
+                    <label> Gebruikersnaam </label>
                     <input id="username" autoCorrect="off" autoCapitalize="none" name="username" onBlur={checkLength}
                            minLength="5" type="username" onKeyDown={onEnterPress} required/>
                     {usernameError ? <p className="warning"> {usernameError} </p> : null}
 
-                    <label> beschrijving </label>
+                    <label> Beschrijving </label>
                     <textarea id="description" autoCorrect="off" name="description" onBlur={checkLength}
                               minLength="0" onKeyDown={onEnterPress}
                               placeholder="Voer hier overige informatie in die het makkelijker maakt voor anderen je te vinden. Zet hier geen vertrouwelijke informatie in. (optioneel)"/>
@@ -238,12 +238,12 @@ const UserInfo = () => {
                     <hr/>
                     <br/> <br/>
 
-                    <label> nieuw wachtwoord </label>
+                    <label> Nieuw wachtwoord </label>
                     <input autoCorrect="off" autoCapitalize="none" name="newPassword" onBlur={checkLength}
                            minLength="6" type="password" onKeyDown={onEnterPress}/>
                     {newPasswordError ? <p className="warning"> {newPasswordError} </p> : null}
 
-                    <label> herhaal nieuw wachtwoord </label>
+                    <label> Herhaal nieuw wachtwoord </label>
                     <input autoCorrect="off" autoCapitalize="none" name="newPasswordRepeat" onBlur={checkMatching}
                            match="newPassword" type="password" onKeyDown={onEnterPress}/>
                     {newPasswordRepeatError ? <p className="warning"> {newPasswordRepeatError} </p> : null}
@@ -252,7 +252,7 @@ const UserInfo = () => {
                     <hr/>
                     <br/> <br/>
 
-                    <label> huidig wachtwoord </label>
+                    <label> Huidig wachtwoord </label>
                     <input autoCorrect="off" autoCapitalize="none" name="currentPassword" onBlur={checkLength}
                            type="password" onKeyDown={onEnterPress} required/>
 
