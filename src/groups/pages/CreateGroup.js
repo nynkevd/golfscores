@@ -163,7 +163,7 @@ const CreateGroup = () => {
                             <h2> Toegevoegd: </h2>
                             <br/>
                             {invitedPlayers.map(player => <p key={player.userId}>
-                                <button type="button" className="negative"
+                                <button type="button" className="negative remove"
                                         onClick={() => removePlayer(player.userId)}> X
                                 </button>
                                 {player.name} </p>)}

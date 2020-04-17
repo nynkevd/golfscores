@@ -7,6 +7,7 @@ import axios from "axios";
 import GroupInvite from "../../groups/components/GroupInvite";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import GroupItem from "../../groups/components/GroupItem";
+import SideGolf from "../../assets/sidegolf.jpg";
 
 const Dashboard = () => {
 
@@ -43,27 +44,31 @@ const Dashboard = () => {
 
     return (
         <React.Fragment>
-
-            <br/> <br/>
-            <div className="pageContent">
+            {isLoading ? <LoadingSpinner asOverlay/> : null}
+            <div className="pageHeader">
+                <img src={SideGolf} alt="Afbeelding van een grasveld"/>
+            </div>
+            <div className="pageContent dashboard">
                 <Link to="/userinfo">
-                    <button> EDIT USER</button>
+                    <button>ACCOUNT AANPASSEN</button>
                 </Link>
 
                 <Link to="/creategroup">
-                    <button> CREATE GROUP</button>
+                    <button>GROEP MAKEN</button>
                 </Link>
 
-                <h2> Groepen </h2>
+                <h2> Mijn groepen </h2>
                 <div className="groups grid">
-                    {groups ? groups.map(group => <GroupItem key={group} groupId={group}> </GroupItem>) :
-                        <p> Geen groepen gevonden, maak <a href="/creategroup"> hier </a> een eigen groep aan. </p>}
+                    {groups && groups.length > 0 ? groups.map(group => <GroupItem key={group}
+                                                                                  groupId={group}> </GroupItem>) :
+                        <p> Geen groepen gevonden, maak <a href="/creategroup"> hier</a> een eigen groep aan. </p>}
                 </div>
 
                 <h2> Uitnodigingen </h2>
                 <div className="invites grid">
-                    {invites ? invites.map(invite => <GroupInvite setIsInviteLoading={setIsInviteLoading}
-                                                                  inviteId={invite} key={invite}/>) :
+                    {invites && invites.length > 0 ? invites.map(invite => <GroupInvite
+                            setIsInviteLoading={setIsInviteLoading}
+                            inviteId={invite} key={invite}/>) :
                         <p> Momenteel geen uitnodigingen </p>}
 
                     {isInviteLoading ? <LoadingSpinner asOverlay/> : null}

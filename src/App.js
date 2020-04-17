@@ -9,6 +9,8 @@ import Dashboard from "./general/pages/Dashboard";
 import UserInfo from "./user/pages/UserInfo";
 import CreateGroup from "./groups/pages/CreateGroup";
 import GroupInfo from "./groups/pages/GroupInfo";
+import GroupInfoAdmin from "./groups/pages/GroupInfoAdmin";
+import Match from "./matches/pages/Match";
 
 const App = () => {
 
@@ -23,6 +25,8 @@ const App = () => {
                 <Route exact path="/userinfo"> <UserInfo/> </Route>
                 <Route exact path="/creategroup"> <CreateGroup/> </Route>
                 <Route exact path="/groupinfo/:groupId"> <GroupInfo/> </Route>
+                <Route exact path="/groupinfo/:groupId/admin"> <GroupInfoAdmin/> </Route>
+                <Route exact path="/groupinfo/:groupId/match/:matchId"> <Match/> </Route>
                 {/*<Redirect to="/"/>*/}
             </Switch>
         );

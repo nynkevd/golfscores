@@ -26,6 +26,10 @@ p.error {
     font-weight: bolder;
 }
 
+p.disabled {
+    color: gray;
+}
+
 button {
     background-color: #4C9F70;
     color: white;
@@ -52,6 +56,14 @@ button.negative {
     background-color: white;
     color: #ff0033;
     border: 2px solid #ff0033;
+}
+
+button.remove {
+    border-width: 1px;
+    text-align: center;
+    padding: 5px 10px;
+    margin-right: 0.5em;
+    font-size: 90%;
 }
 
 button:hover {
@@ -88,6 +100,10 @@ hr {
 
 ul {
     padding: 0;
+}
+
+a {
+    width: fit-content;
 }
 
 .pageHeader {

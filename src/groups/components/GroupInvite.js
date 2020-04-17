@@ -5,13 +5,11 @@ import axios from "axios";
 import "./GroupInvite.css";
 
 import {AuthContext} from "../../shared/auth-context";
-import LoadingSpinner from "../../shared/components/LoadingSpinner";
 
 const GroupInvite = props => {
     const auth = useContext(AuthContext);
     const history = useHistory();
     const [inviteInfo, setInviteInfo] = useState({groupName: '', inviter: '', inviteId: '', players: null});
-    const [isUpdating, setIsUpdating] = useState();
 
     useEffect(() => {
         (async function loadData() {

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../shared/auth-context";
 import {BrowserRouter as Redirect} from "react-router-dom";
-import {isMinLength, checkFormValid, onEnterPress} from "../../shared/validators";
+import {checkFormValid} from "../../shared/validators";
 
 import axios from 'axios';
 
@@ -27,7 +27,6 @@ const Login = () => {
         let formValid = checkFormValid(formState);
 
         if (formValid) {
-
             await axios({
                 method: 'POST',
                 url: `${process.env.REACT_APP_API_URL}/user/login`,
@@ -44,6 +43,7 @@ const Login = () => {
                 axios.defaults.headers['Content-Type'] = "application/json";
                 axios.defaults.headers['x-auth-token'] = data.token;
                 console.log(axios.defaults.headers);
+                //TODO CHANGE THIS TO HISTORY
                 return <Redirect to="/"/>
             }).catch((error) => {
                 setError(error.response.data.message);
