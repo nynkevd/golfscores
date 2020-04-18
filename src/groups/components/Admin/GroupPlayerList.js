@@ -77,7 +77,7 @@ const GroupPlayerList = props => {
 
     return (
         <React.Fragment>
-            <h3> Spelers </h3>
+            <h4> Spelers </h4>
             {players && players.length > 0 ?
                 players.map((player) =>
                     <p key={player.id}>
@@ -89,7 +89,7 @@ const GroupPlayerList = props => {
                 <p className="warning"> Geen spelers gevonden </p>
             }
 
-            <h3> Admins </h3>
+            <h4> Admins </h4>
             {admins && admins.length > 0 ?
                 admins.map((admin) =>
                     <p key={admin.id}>

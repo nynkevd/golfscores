@@ -7,6 +7,10 @@ import Topgolf from "../../assets/topgolf.jpeg";
 import {AuthContext} from "../../shared/auth-context";
 import GroupPlayerList from "../components/Admin/GroupPlayerList";
 import GroupInviteList from "../components/Admin/GroupInviteList";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import Match from "../../matches/pages/Match";
+import MatchItem from "../../matches/components/MatchItem";
+import GroupMatchItem from "../components/Admin/GroupMatchItem";
 
 const GroupInfoAdmin = () => {
     const history = useHistory();
@@ -43,6 +47,7 @@ const GroupInfoAdmin = () => {
 
     useEffect(() => {
         (async function loadData() {
+            setIsLoading(true);
             await axios({
                 method: 'GET',
                 url: `${process.env.REACT_APP_API_URL}/group/groupAdminInfo/${groupId}`,
@@ -50,12 +55,14 @@ const GroupInfoAdmin = () => {
                     'X-Auth-Token': auth.token,
                 }
             }).then((res) => {
-                console.log(res.data.matches);
+                setMatches(res.data.matches);
                 setPlayers(res.data.players);
                 setInvitedPlayers(res.data.invites);
                 setAdmins(res.data.admins);
                 setPossibleAdmins(res.data.possibleAdmins);
+                setIsLoading(false);
             }).catch((error) => {
+                setIsLoading(false);
                 history.push(link);
             })
         })();
@@ -92,7 +99,7 @@ const GroupInfoAdmin = () => {
     return (
 
         <React.Fragment>
-
+            {isLoading ? <LoadingSpinner asOverlay/> : null}
             <div className="pageHeader">
                 <img src={Topgolf} alt="Afbeelding van een golf koers"/>
             </div>
@@ -101,11 +108,20 @@ const GroupInfoAdmin = () => {
 
                 <Link className="breadcrumbs" to={link}><p> &#60; terug naar de groep </p></Link>
 
-                <h3> Wedstrijd toevoegen </h3>
+                <h3> Wedstrijden beheren </h3>
+                <h4> Overzicht </h4>
+                {matches ? matches.map((match) => {
+                    return (<GroupMatchItem date={match.date} matchId={match.id} forceUpdate={forceUpdate}
+                                            update={update}/>)
+                }) : null}
+
+                <h4> Toevoegen </h4>
                 <input id="matchDate" type="date"/>
                 {message ? <p> {message} </p> : null}
-
                 <button type="button" onClick={addMatch}> TOEVOEGEN</button>
+
+                <h4> Verwijderen </h4>
+
                 <h3> Spelers beheren</h3>
                 <GroupPlayerList players={players} admins={admins} possibleAdmins={possibleAdmins}
                                  forceUpdate={forceUpdate} update={update}/>

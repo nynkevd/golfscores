@@ -6,6 +6,7 @@ import {AuthContext} from "../../shared/auth-context";
 
 import Topgolf2 from "../../assets/topgolf2.jpeg";
 import Result from "../components/Result";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
 
 const Match = () => {
     const auth = useContext(AuthContext);
@@ -13,13 +14,13 @@ const Match = () => {
     const link = `/groupinfo/${groupId}`;
     const history = useHistory();
 
+    const [isLoading, setIsLoading] = useState(false);
     const [players, setPlayers] = useState();
     const [scores, setScores] = useState({});
     const [error, setError] = useState();
 
     useEffect(() => {
         (async function checkIfAdmin() {
-            // setIsLoading(true);
             console.log("checking");
             await axios({
                 method: 'GET',
@@ -37,6 +38,7 @@ const Match = () => {
 
     useEffect(() => {
         (async function loadData() {
+            setIsLoading(true);
             await axios({
                 method: 'GET',
                 url: `${process.env.REACT_APP_API_URL}/match/matchinfo/${matchId}`,
@@ -44,6 +46,7 @@ const Match = () => {
                     'X-Auth-Token': auth.token,
                 }
             }).then((res) => {
+                setIsLoading(false);
                 setPlayers(res.data.players);
             })
         })();
@@ -51,7 +54,13 @@ const Match = () => {
 
     const submitMatchResults = async () => {
         if (window.confirm("Weet je zeker dat je de onderstaande resultaten wil invullen, deze actie kan niet ongedaan worden.")) {
-            console.log(scores);
+            setIsLoading(true);
+            let data = {
+                groupId,
+                matchId,
+                scores
+            }
+            console.log(data);
             await axios({
                 method: 'POST',
                 url: `${process.env.REACT_APP_API_URL}/match/entermatchresults`,
@@ -64,8 +73,10 @@ const Match = () => {
                     'X-Auth-Token': auth.token,
                 }
             }).then((res) => {
+                setIsLoading(false);
                 history.push(link);
             }).catch((error) => {
+                setIsLoading(false);
                 setError(error.response.data.message);
             });
         }
@@ -73,6 +84,7 @@ const Match = () => {
 
     return (
         <React.Fragment>
+            {isLoading ? <LoadingSpinner asOverlay/> : null}
             <div className="pageHeader">
                 <img src={Topgolf2} alt="Afbeelding van een golf koers"/>
             </div>
