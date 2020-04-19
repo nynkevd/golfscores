@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import axios from "axios";
-import moment from "moment";
 
 import Topgolf from "../../assets/topgolf.jpeg";
-
 import {AuthContext} from "../../shared/auth-context";
-import TopGolf from "../../assets/sidegolf2.jpg";
 import MatchItem from "../../matches/components/MatchItem";
+
+import './GroupInfo.css';
 
 const GroupInfo = () => {
     let {groupId} = useParams();
@@ -23,6 +22,8 @@ const GroupInfo = () => {
     const [prevMatches, setPrevMatches] = useState();
     const [forbidden, setForbidden] = useState(false);
 
+    let counter = 0;
+
     useEffect(() => {
         (async function loadData() {
             setIsLoading(true);
@@ -33,20 +34,13 @@ const GroupInfo = () => {
                     'X-Auth-Token': auth.token
                 }
             }).then((res) => {
-                console.log(res.data);
                 setIsAdmin(res.data.isAdmin || null);
                 setGroupName(res.data.groupName || null);
-                setPlayerResults(res.data.players || null);
-                // if (res.data.matchToday) {
-                //     setMatchToday(moment(res.data.matchToday.date).format('DD-MM-YYYY'));
-                // }
+                setPlayerResults(res.data.standings || null);
                 setMatchToday(res.data.matchToday || null);
                 setMatches(res.data.matches || null);
                 setPrevMatches(res.data.prevMatches || null);
-                console.log(res.data);
             }).catch((error) => {
-                console.log("i got error");
-                console.log(error);
                 if (error.response.status === 403) {
                     setForbidden(true);
                 }
@@ -70,7 +64,18 @@ const GroupInfo = () => {
 
                 <h2> {groupName} </h2>
 
-                {playerResults ? playerResults.map((player) => <p key={player.name}> {player.name} </p>) : null}
+                <div className="results">
+                    {playerResults ? playerResults.map((player) => {
+                        counter++;
+                        return (
+                            <div className="item-result" key={counter}>
+                                <p> {counter}.</p>
+                                <p> {player.name} </p>
+                                <p> {player.average} </p>
+                            </div>
+                        );
+                    }) : null}
+                </div>
 
                 {matchToday ?
                     <React.Fragment>
@@ -86,13 +91,11 @@ const GroupInfo = () => {
                 <div className="matches grid">
                     {matches ? matches.map((match) => {
                             if (match.results) {
-                                console.log(match.results);
                                 return (<MatchItem key={match.id} results={match.results} date={match.date}/>);
                             } else {
                                 return (<MatchItem key={match.id} noResults date={match.date} match={match.id}
                                                    isAdmin={isAdmin}/>);
                             }
-                            // {match.hasResults ? <p key={match.id}> {match.date} </p> : <a key={match.id} href={baseMatchLink+match.id}> {match.date} </a>}
                         }
                     ) : null}
                 </div>
@@ -102,15 +105,13 @@ const GroupInfo = () => {
                     {prevMatches ? prevMatches.map((match) => {
                             if (match.results) {
                                 return (<MatchItem key={match.id} results={match.results} date={match.date}/>)
-                                // return (<p key={match.id}> {match.date} </p>);
                             } else {
                                 return (<MatchItem key={match.id} noResults date={match.date} match={match.id}
                                                    isAdmin={isAdmin}/>)
 
-                                // return (<a key={match.id} href={baseMatchLink + match.id}> {match.date} </a>);
                             }
-                        })
-                        : null}
+                        }
+                    ) : null}
                 </div>
 
 

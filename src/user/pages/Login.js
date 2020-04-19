@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../shared/auth-context";
-import {BrowserRouter as Redirect} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {checkFormValid} from "../../shared/validators";
 
 import axios from 'axios';
@@ -9,6 +9,7 @@ import SideGolf from './../../assets/sidegolf.jpg';
 import './LoginSignup.css';
 
 const Login = () => {
+    const history = useHistory();
     const auth = useContext(AuthContext);
     const [formState, setFormState] = useState({
         username: {
@@ -39,12 +40,13 @@ const Login = () => {
                 }
             }).then((res) => {
                 let data = res.data;
-                auth.login(data.userId, data.token);
+                (async function login() {
+                    await auth.login(data.userId, data.token);
+                })();
                 axios.defaults.headers['Content-Type'] = "application/json";
                 axios.defaults.headers['x-auth-token'] = data.token;
-                console.log(axios.defaults.headers);
                 //TODO CHANGE THIS TO HISTORY
-                return <Redirect to="/"/>
+                history.push("/");
             }).catch((error) => {
                 setError(error.response.data.message);
             })

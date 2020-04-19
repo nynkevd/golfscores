@@ -160,7 +160,7 @@ const CreateGroup = () => {
                     <div className="cg-players">
 
                         <div className="cg-invited">
-                            <h2> Toegevoegd: </h2>
+                            <h2> Uitgenodigd: </h2>
                             <br/>
                             {invitedPlayers.map(player => <p key={player.userId}>
                                 <button type="button" className="negative remove"

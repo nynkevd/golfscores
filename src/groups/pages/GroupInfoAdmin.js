@@ -25,12 +25,11 @@ const GroupInfoAdmin = () => {
     const [admins, setAdmins] = useState();
     const [possibleAdmins, setPossibleAdmins] = useState();
     const [invitedPlayers, setInvitedPlayers] = useState();
-    const [isLoading, setIsLoading] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         (async function checkIfAdmin() {
             setIsLoading(true);
-            console.log("checking");
             await axios({
                 method: 'GET',
                 url: `${process.env.REACT_APP_API_URL}/group/checkIfAdmin/${groupId}`,
@@ -74,7 +73,7 @@ const GroupInfoAdmin = () => {
 
     const addMatch = async () => {
         let date = document.getElementById("matchDate").value;
-
+        setIsLoading(true);
         await axios({
             method: 'POST',
             url: `${process.env.REACT_APP_API_URL}/match/add`,
@@ -94,6 +93,23 @@ const GroupInfoAdmin = () => {
             setMessage(error.response.data.message);
         })
 
+    };
+
+    const deletegroup = async () => {
+        await axios({
+            method: 'DELETE',
+            url: `${process.env.REACT_APP_API_URL}/group/remove`,
+            headers: {
+                'X-Auth-Token': auth.token
+            },
+            data: {
+                groupId
+            }
+        }).then((res) => {
+            history.push("/");
+        }).catch((error) => {
+            setMessage("Er is iets fout gegaan met verwijderen.");
+        })
     };
 
     return (
@@ -130,7 +146,7 @@ const GroupInfoAdmin = () => {
                 <GroupInviteList invitedPlayers={invitedPlayers} setInvitedPlayers={setInvitedPlayers}
                                  forceUpdate={forceUpdate} update={update}/>
 
-
+                <button className="negative" onClick={deletegroup}> GROEP VERWIJDEREN</button>
             </div>
 
         </React.Fragment>

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import "./Dashboard.css";
 import {AuthContext} from "../../shared/auth-context";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import GroupInvite from "../../groups/components/GroupInvite";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
@@ -10,7 +10,7 @@ import GroupItem from "../../groups/components/GroupItem";
 import SideGolf from "../../assets/sidegolf.jpg";
 
 const Dashboard = () => {
-
+    const history = useHistory();
     const auth = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState();
     const [isInviteLoading, setIsInviteLoading] = useState();
@@ -19,7 +19,6 @@ const Dashboard = () => {
 
 
     useEffect(() => {
-        console.log(auth.token);
         (async function loadData() {
             setIsLoading(true);
             await axios({
@@ -29,7 +28,6 @@ const Dashboard = () => {
                     'X-Auth-Token': auth.token
                 }
             }).then((res) => {
-                console.log(res.data);
                 setInvites(res.data.invites);
                 setGroups(res.data.groups);
             })
@@ -40,6 +38,7 @@ const Dashboard = () => {
 
     const logoutHandler = () => {
         auth.logout();
+        history.push("/login");
     };
 
     return (

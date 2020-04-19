@@ -1,14 +1,3 @@
-.invite {
-    padding: 20px;
-    margin: 20px;
-    border: #9EC1A3 2px solid;
-    border-radius: 2px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 100%;
-}
-
 .invite > * > * {
     margin-bottom: 0.5em;
 }
@@ -23,11 +12,6 @@
 
 .invite p {
     display: flex;
-}
-
-.invite p:first-of-type {
-    font-size: 1.1em;
-    font-weight: bold;
 }
 
 .invite button {

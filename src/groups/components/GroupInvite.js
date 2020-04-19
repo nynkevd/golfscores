@@ -69,9 +69,9 @@ const GroupInvite = props => {
 
     return (
         <React.Fragment>
-            <div className="invite">
+            <div className="invite card">
                 <div>
-                    <p><em> Voor: </em> {inviteInfo.groupName} </p>
+                    <p className="card--title"><em> Voor: </em> {inviteInfo.groupName} </p>
                     <p><em> Door: </em> {inviteInfo.inviter} </p>
                     {inviteInfo.players ?
                         inviteInfo.players.length > 0 ?

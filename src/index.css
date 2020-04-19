@@ -137,6 +137,33 @@ a {
     margin-bottom: 2em;
 }
 
+.card {
+    padding: 20px;
+    margin: 20px;
+    border: #9EC1A3 2px solid;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 100%;
+}
+
+.card--title {
+    font-weight: bold;
+    font-size: 110%;
+    margin-bottom: 1em;
+}
+
+.item-result {
+    display: grid;
+    grid-template-columns: 10% 70% 20%;
+}
+
+.item-result p {
+    margin-right: 1em;
+    margin-bottom: 0.25em;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

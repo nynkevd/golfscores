@@ -28,7 +28,8 @@ const GroupItem = props => {
                 setGroupItemInfo({
                     ...groupItemInfo,
                     groupName: res.data.groupName,
-                    standings: res.data.standings
+                    standings: res.data.standings,
+                    nextMatch: res.data.nextMatch
                 });
 
             })
@@ -37,25 +38,28 @@ const GroupItem = props => {
 
     return (
         <React.Fragment>
-            <div className="groupItem">
-                <p><strong> {groupItemInfo.groupName} </strong></p>
+            <div className="groupItem card">
+                <p className="card--title">{groupItemInfo.groupName}</p>
 
-                {groupItemInfo.standings.length > 0 ?
-                    (groupItemInfo.standings.map((result) => {
-                        if (result.average) {
-                            counter++;
-                            return (
-                                <React.Fragment key={counter}>
-                                    <p> {counter}.</p>
-                                    <p> {result.name} </p>
-                                    <p> {result.average} </p>
-                                </React.Fragment>
-                            );
-                        }
-                    }))
-                    : <p> Nog geen resultaten voor deze groep </p>}
+                <div className="groupStandings">
+                    {groupItemInfo.standings.length > 0 ?
+                        (groupItemInfo.standings.map((result) => {
+                            if (result.average >= 0) {
+                                counter++;
+                                return (
+                                    <div className="item-result" key={counter}>
+                                        <p> {counter}.</p>
+                                        <p> {result.name} </p>
+                                        <p> {result.average} </p>
+                                    </div>
+                                );
+                            }
+                        }))
+                        : <p> Nog geen resultaten voor deze groep </p>}
+                </div>
 
-                {counter === 0 ? <p> Nog geen resultaten voor deze groep </p> : null}
+                {groupItemInfo.nextMatch ? <p> Volgende wedstrijd: {groupItemInfo.nextMatch} </p> :
+                    <p> Nog geen wedstrijden gepland.</p>}
 
 
                 <a href={link}> Groep bekijken > </a>

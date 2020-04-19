@@ -7,13 +7,12 @@ const MatchItem = props => {
     let {groupId} = useParams();
     const baseMatchLink = `/groupinfo/${groupId}/match/`;
 
-    console.log(props.results);
     let counter = 0;
 
     return (
         <React.Fragment>
-            <div className="matchItem">
-                <h3> {props.date} </h3>
+            <div className="matchItem card">
+                <p className="card--title"> {props.date} </p>
                 {props.noResults ? (
                     <React.Fragment>
                         <p> Deze wedstrijd heeft nog geen resultaten.</p>
@@ -28,11 +27,11 @@ const MatchItem = props => {
                             if (result.score) {
                                 counter++;
                                 return (
-                                    <React.Fragment>
+                                    <div className="item-result" key={counter}>
                                         <p> {counter}.</p>
                                         <p> {result.name} </p>
                                         <p> {result.score} </p>
-                                    </React.Fragment>
+                                    </div>
                                 );
                             }
 

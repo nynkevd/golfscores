@@ -27,7 +27,7 @@ const UserResultItem = props => {
     };
 
     return (
-        <li className="userResultItem">
+        <li className="userResultItem card">
             <div>
                 <h3> {props.name} </h3>
                 <p> {props.username} </p>
