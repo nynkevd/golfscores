@@ -8,9 +8,9 @@ import {AuthContext} from "../../shared/auth-context";
 import GroupPlayerList from "../components/Admin/GroupPlayerList";
 import GroupInviteList from "../components/Admin/GroupInviteList";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
-import Match from "../../matches/pages/Match";
-import MatchItem from "../../matches/components/MatchItem";
 import GroupMatchItem from "../components/Admin/GroupMatchItem";
+
+import './GroupInfoAdmin.css';
 
 const GroupInfoAdmin = () => {
     const history = useHistory();
@@ -60,7 +60,7 @@ const GroupInfoAdmin = () => {
                 setAdmins(res.data.admins);
                 setPossibleAdmins(res.data.possibleAdmins);
                 setIsLoading(false);
-            }).catch((error) => {
+            }).catch(() => {
                 setIsLoading(false);
                 history.push(link);
             })
@@ -105,9 +105,9 @@ const GroupInfoAdmin = () => {
             data: {
                 groupId
             }
-        }).then((res) => {
+        }).then(() => {
             history.push("/");
-        }).catch((error) => {
+        }).catch(() => {
             setMessage("Er is iets fout gegaan met verwijderen.");
         })
     };
@@ -120,23 +120,30 @@ const GroupInfoAdmin = () => {
                 <img src={Topgolf} alt="Afbeelding van een golf koers"/>
             </div>
 
-            <div className="pageContent">
+            <div className="pageContent groupInfoAdmin">
 
                 <Link className="breadcrumbs" to={link}><p> &#60; terug naar de groep </p></Link>
 
                 <h3> Wedstrijden beheren </h3>
                 <h4> Overzicht </h4>
-                {matches ? matches.map((match) => {
-                    return (<GroupMatchItem date={match.date} matchId={match.id} forceUpdate={forceUpdate}
-                                            update={update}/>)
-                }) : null}
+                <p> Onderstaand is een overzicht van de wedstrijden van afgelopen week, en de komende week. Deze
+                    wedstrijden kunnen ook inclusief resultaten verwijderd worden.</p>
+                <div className="matches">
+                    {matches ? matches.map((match) => {
+                        return (<GroupMatchItem date={match.date} matchId={match.id} forceUpdate={forceUpdate}
+                                                update={update}/>)
+                    }) : null}
+                </div>
+
 
                 <h4> Toevoegen </h4>
-                <input id="matchDate" type="date"/>
-                {message ? <p> {message} </p> : null}
-                <button type="button" onClick={addMatch}> TOEVOEGEN</button>
+                <div className="addMatch">
+                    <input id="matchDate" type="date"/>
+                    <button type="button" onClick={addMatch}> TOEVOEGEN</button>
+                </div>
 
-                <h4> Verwijderen </h4>
+                {message ? <p> {message} </p> : null}
+
 
                 <h3> Spelers beheren</h3>
                 <GroupPlayerList players={players} admins={admins} possibleAdmins={possibleAdmins}

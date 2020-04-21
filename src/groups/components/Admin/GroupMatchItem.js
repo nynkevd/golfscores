@@ -30,12 +30,12 @@ const GroupMatchItem = props => {
     };
 
     return (
-        <React.Fragment>
+        <div className="groupMatchItem">
             <button type="button" className="negative remove"
                     onClick={deleteMatch}> X
             </button>
             <p> {props.date} </p>
-        </React.Fragment>
+        </div>
     );
 };
 

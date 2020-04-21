@@ -55,12 +55,6 @@ const Match = () => {
     const submitMatchResults = async () => {
         if (window.confirm("Weet je zeker dat je de onderstaande resultaten wil invullen, deze actie kan niet ongedaan worden.")) {
             setIsLoading(true);
-            let data = {
-                groupId,
-                matchId,
-                scores
-            }
-            console.log(data);
             await axios({
                 method: 'POST',
                 url: `${process.env.REACT_APP_API_URL}/match/entermatchresults`,
@@ -100,7 +94,7 @@ const Match = () => {
                     <p className="warning"> Geen spelers gevonden </p>
                 }
 
-                <button onClick={submitMatchResults}> COMPLEET</button>
+                <button onClick={submitMatchResults}> INVOEREN</button>
                 {error ? <p className="error"> {error} </p> : null}
             </div>
         </React.Fragment>

@@ -68,10 +68,15 @@ const GroupInviteList = props => {
                 <p className="warning"> Geen spelers gevonden </p>
             }
 
-            <label> Gebruikersnaam </label>
-            <input type="text" onChange={handleUsernameInput}/>
+            <label> Met gebruikersnaam uitnodigen </label>
+            {/*<p className="subText"> Voer hier de precieze gebruikersnaam in van de gebruiker die je wil uitnodigen. </p>*/}
+            <div className="inviteUser">
+                <input type="text" onChange={handleUsernameInput}/>
+                <button type="button" onClick={invitePlayer}>UITNODIGEN</button>
+            </div>
+
             {warning ? <p className="warning"> {warning} </p> : null}
-            <button type="button" onClick={invitePlayer}> UITNODIGEN</button>
+
 
         </React.Fragment>
     )

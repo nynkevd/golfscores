@@ -39,30 +39,35 @@ const GroupItem = props => {
     return (
         <React.Fragment>
             <div className="groupItem card">
-                <p className="card--title">{groupItemInfo.groupName}</p>
+                <div>
+                    <p className="card--title">{groupItemInfo.groupName}</p>
 
-                <div className="groupStandings">
-                    {groupItemInfo.standings.length > 0 ?
-                        (groupItemInfo.standings.map((result) => {
-                            if (result.average >= 0) {
-                                counter++;
-                                return (
-                                    <div className="item-result" key={counter}>
-                                        <p> {counter}.</p>
-                                        <p> {result.name} </p>
-                                        <p> {result.average} </p>
-                                    </div>
-                                );
-                            }
-                        }))
-                        : <p> Nog geen resultaten voor deze groep </p>}
+                    <div className="groupStandings">
+                        {groupItemInfo.standings.length > 0 ?
+                            (groupItemInfo.standings.map((result) => {
+                                if (result.average >= 0) {
+                                    counter++;
+                                    return (
+                                        <div className="item-result" key={counter}>
+                                            <p> {counter}.</p>
+                                            <p> {result.name} </p>
+                                            <p> {result.average} </p>
+                                        </div>
+                                    );
+                                }
+                            }))
+                            : <p> Nog geen resultaten voor deze groep </p>}
+                    </div>
                 </div>
 
-                {groupItemInfo.nextMatch ? <p> Volgende wedstrijd: {groupItemInfo.nextMatch} </p> :
-                    <p> Nog geen wedstrijden gepland.</p>}
+                <div>
+                    {groupItemInfo.nextMatch ?
+                        <p className="match"> Volgende wedstrijd: {groupItemInfo.nextMatch} </p> :
+                        <p className="match"> Nog geen wedstrijden gepland.</p>}
 
 
-                <a href={link}> Groep bekijken > </a>
+                    <a href={link}> Groep bekijken > </a>
+                </div>
             </div>
         </React.Fragment>
     )

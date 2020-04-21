@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import {useHistory} from 'react-router-dom';
 
 import {AuthContext} from "../../shared/auth-context";
 import {isMinLength, checkFormValid} from "../../shared/validators";
@@ -11,6 +12,7 @@ import {BrowserRouter as Redirect} from "react-router-dom";
 const Signup = () => {
 
     const auth = useContext(AuthContext);
+    const history = useHistory();
     const [formState, setFormState] = useState({
         name: {
             value: '',
@@ -60,7 +62,7 @@ const Signup = () => {
             }).then((res) => {
                 let data = res.data;
                 auth.login(data.userId, data.token);
-                return <Redirect to="/"/>
+                history.push("/");
             }).catch((error) => {
                 setError(error.response.data.message);
             })

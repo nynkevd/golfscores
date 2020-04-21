@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useParams, useHistory} from 'react-router-dom';
 import axios from "axios";
 
 import Topgolf from "../../assets/topgolf.jpeg";
@@ -11,6 +11,7 @@ import './GroupInfo.css';
 const GroupInfo = () => {
     let {groupId} = useParams();
     const auth = useContext(AuthContext);
+    const history = useHistory();
     const adminLink = `/groupinfo/${groupId}/admin`;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -49,20 +50,25 @@ const GroupInfo = () => {
         setIsLoading(false);
     }, []);
 
+    const toEditGroup = () => {
+        history.push(adminLink);
+    };
+
     return (
         <React.Fragment>
             <div className="pageHeader">
                 <img src={Topgolf} alt="Afbeelding van een grasveld"/>
             </div>
 
-            <div className="pageContent">
+            <div className="pageContent groupInfo">
 
                 <Link className="breadcrumbs" to="/"><p> &#60; terug naar dashboard </p></Link>
 
                 {forbidden ? <p className="error"> Je bent geen deel van deze groep, vraag de eigenaar je toe te
                     voegen. </p> : null}
 
-                <h2> {groupName} </h2>
+                <h2 className="groupname"> {groupName} {isAdmin ?
+                    <i onClick={toEditGroup} className="fas fa-cogs"> </i> : null} </h2>
 
                 <div className="results">
                     {playerResults ? playerResults.map((player) => {
@@ -89,7 +95,7 @@ const GroupInfo = () => {
 
                 <h3> Komende wedstrijden: </h3>
                 <div className="matches grid">
-                    {matches ? matches.map((match) => {
+                    {matches && matches.length > 0 ? matches.map((match) => {
                             if (match.results) {
                                 return (<MatchItem key={match.id} results={match.results} date={match.date}/>);
                             } else {
@@ -97,12 +103,12 @@ const GroupInfo = () => {
                                                    isAdmin={isAdmin}/>);
                             }
                         }
-                    ) : null}
+                    ) : <p> Er zijn nog geen wedstrijden gepland. </p>}
                 </div>
 
                 <h3> Vorige wedstrijden: </h3>
                 <div className="matches grid">
-                    {prevMatches ? prevMatches.map((match) => {
+                    {prevMatches && prevMatches.length > 0 ? prevMatches.map((match) => {
                             if (match.results) {
                                 return (<MatchItem key={match.id} results={match.results} date={match.date}/>)
                             } else {
@@ -111,11 +117,8 @@ const GroupInfo = () => {
 
                             }
                         }
-                    ) : null}
+                    ) : <p> Er zijn nog geen wedstrijden gespeeld. </p>}
                 </div>
-
-
-                {isAdmin ? <a href={adminLink}> admin </a> : null}
             </div>
         </React.Fragment>
     )

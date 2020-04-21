@@ -1,5 +1,6 @@
 .users-list {
     width: 100%;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -7,5 +8,6 @@
 @media only screen and (max-width: 767px) {
     .users-list {
         grid-template-columns: 1fr;
+        grid-gap: 15px;
     }
 }

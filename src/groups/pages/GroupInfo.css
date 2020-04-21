@@ -1,7 +1,22 @@
+.groupname i {
+    margin-left: 1em;
+    height: 1.5em;
+    color: #9EC1A3;
+    transition: 0.2s ease-in-out all;
+}
+
+.groupname i:hover {
+    cursor: pointer;
+    color: #4c9f70;
+}
+
+.groupInfo h3 {
+    margin: 2em 0 0.5em;
+}
+
 .results {
     width: 20%;
     margin-top: 1em;
-    margin-bottom: 2em;
 }
 
 @media only screen and (max-width: 768px) {

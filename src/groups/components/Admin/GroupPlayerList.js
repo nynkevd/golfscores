@@ -76,43 +76,47 @@ const GroupPlayerList = props => {
     }
 
     return (
-        <React.Fragment>
-            <h4> Spelers </h4>
-            {players && players.length > 0 ?
-                players.map((player) =>
-                    <p key={player.id}>
-                        <button type="button" className="negative remove"
-                                onClick={() => confirmDelete(player.id, player.name)}> X
-                        </button>
-                        {player.name} </p>
-                ) :
-                <p className="warning"> Geen spelers gevonden </p>
-            }
+        <div className="groupPlayers">
+            <div className="players">
+                <h4> Spelers </h4>
+                {players && players.length > 0 ?
+                    players.map((player) =>
+                        <p key={player.id}>
+                            <button type="button" className="negative remove"
+                                    onClick={() => confirmDelete(player.id, player.name)}> X
+                            </button>
+                            {player.name} </p>
+                    ) :
+                    <p className="warning"> Geen spelers gevonden </p>
+                }
+            </div>
 
-            <h4> Admins </h4>
-            {admins && admins.length > 0 ?
-                admins.map((admin) =>
-                    <p key={admin.id}>
-                        <button type="button" className="negative remove"
-                                onClick={() => confirmAdminDelete(admin.id, admin.name)}> X
-                        </button>
-                        {admin.name} </p>
-                ) :
-                <p className="warning"> Geen admins gevonden </p>
-            }
-            {possibleAdmins && possibleAdmins.length > 0 ?
-                <React.Fragment>
-                    <select id="newadmingai">
-                        {possibleAdmins.map((possibleAdmin) =>
-                            <option value={possibleAdmin.id} key={possibleAdmin.id}> {possibleAdmin.name} </option>
-                        )}
-                    </select>
-                    <button type="button" onClick={addAdmin}> ADMIN TOEVOEGEN</button>
-                </React.Fragment>
-                : null}
+            <div className="admins">
+                <h4> Administrators </h4>
+                {admins && admins.length > 0 ?
+                    admins.map((admin) =>
+                        <p key={admin.id}>
+                            <button type="button" className="negative remove"
+                                    onClick={() => confirmAdminDelete(admin.id, admin.name)}> X
+                            </button>
+                            {admin.name} </p>
+                    ) :
+                    <p className="warning"> Geen admins gevonden </p>
+                }
+                {possibleAdmins && possibleAdmins.length > 0 ?
+                    <div className="addadmin">
+                        <select id="newadmingai">
+                            {possibleAdmins.map((possibleAdmin) =>
+                                <option value={possibleAdmin.id} key={possibleAdmin.id}> {possibleAdmin.name} </option>
+                            )}
+                        </select>
+                        <button type="button" onClick={addAdmin}> ADMIN TOEVOEGEN</button>
+                    </div>
+                    : null}
 
-            {adminWarning ? <p className="error"> {adminWarning} </p> : null}
-        </React.Fragment>
+                {adminWarning ? <p className="error"> {adminWarning} </p> : null}
+            </div>
+        </div>
     )
 };
 

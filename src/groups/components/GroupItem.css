@@ -4,3 +4,12 @@
     width: fit-content;
     align-self: flex-end;
 }
+
+.groupItem > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.groupItem .match {
+    margin-top: 20px;
+}

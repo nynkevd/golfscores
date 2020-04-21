@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {BrowserRouter as Redirect, Link} from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
 
 import {AuthContext} from '../../shared/auth-context';
 import {checkFormValid, isMinLength, onEnterPress} from "../../shared/validators";
@@ -12,6 +12,7 @@ import axios from "axios";
 const UserInfo = () => {
 
     const auth = useContext(AuthContext);
+    const history = useHistory();
 
     const [formState, setFormState] = useState({
         name: {
@@ -201,6 +202,7 @@ const UserInfo = () => {
 
     const logoutHandler = () => {
         auth.logout();
+        history.push("/login");
     };
 
     return (

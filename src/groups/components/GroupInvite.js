@@ -35,7 +35,6 @@ const GroupInvite = props => {
     }, []);
 
     const acceptInvite = async (event) => {
-        event.persist();
         await axios({
             method: 'PATCH',
             url: `${process.env.REACT_APP_API_URL}/invite/accept/${inviteInfo.inviteId}`,
@@ -43,17 +42,17 @@ const GroupInvite = props => {
                 'X-Auth-Token': auth.token,
             }
         }).then((res) => {
-            console.log(res);
-            event.target.parentNode.parentNode.remove();
-            let link = `/groupinfo/${res.data.groupId}`;
-            history.push(link);
+            props.forceUpdate(!props.update);
+            // console.log(res);
+            // event.target.parentNode.parentNode.remove();
+            // let link = `/groupinfo/${res.data.groupId}`;
+            // history.push(link);
         }).catch((error) => {
             console.log(error.response.data.message);
         });
     };
 
     const declineInvite = async (event) => {
-        event.persist();
         await axios({
             method: 'PATCH',
             url: `${process.env.REACT_APP_API_URL}/invite/decline/${inviteInfo.inviteId}`,
@@ -61,7 +60,8 @@ const GroupInvite = props => {
                 'X-Auth-Token': auth.token,
             }
         }).then((res) => {
-            event.target.parentNode.parentNode.remove();
+            props.forceUpdate(!props.update);
+            // event.target.parentNode.parentNode.remove();
         }).catch((error) => {
             console.log(error.response.data.message);
         });

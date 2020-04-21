@@ -1,0 +1,40 @@
+.dashboard h2 {
+    margin: 1.5em 0 0.5em;
+}
+
+.dashboard h2:first-of-type {
+    font-size: 1.8em;
+    margin-bottom: 0;
+}
+
+.dashboard h2 i {
+    margin-left: 1em;
+    height: 1.5em;
+    color: #9EC1A3;
+    transition: 0.2s ease-in-out all;
+}
+
+.dashboard h2 i:hover {
+    cursor: pointer;
+    color: #4c9f70;
+}
+
+.dashboard .creategroup {
+    background-color: #9EC1A3;
+    font-size: 7em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease-in-out all;
+}
+
+.dashboard .creategroup:hover {
+    border-color: #4c9f70;
+    background-color: #4c9f70;
+}
+
+.dashboard .creategroup p {
+    color: white;
+}

@@ -45,7 +45,6 @@ const Login = () => {
                 })();
                 axios.defaults.headers['Content-Type'] = "application/json";
                 axios.defaults.headers['x-auth-token'] = data.token;
-                //TODO CHANGE THIS TO HISTORY
                 history.push("/");
             }).catch((error) => {
                 setError(error.response.data.message);

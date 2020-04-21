@@ -1,0 +1,34 @@
+.matchResult {
+    display: grid;
+    grid-template-columns: auto 25px;
+    grid-gap: 20px;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 1em;
+}
+
+.matchResult i {
+    font-size: 1.2em;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.matchResult i.playing {
+    color: #9EC1A3;
+}
+
+.matchResult i.not-playing {
+    color: #ff0033;
+}
+
+@media only screen and (max-width: 1200px) {
+    .matchResult {
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .matchResult {
+        width: 100%;
+    }
+}

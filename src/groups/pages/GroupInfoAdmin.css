@@ -1,0 +1,89 @@
+.groupInfoAdmin h3 {
+    margin: 2em 0 0.5em;
+}
+
+.groupInfoAdmin h3:first-of-type {
+    margin-top: 0;
+}
+
+.groupInfoAdmin h4 {
+    margin: 0.5em 0;
+}
+
+.groupInfoAdmin .subText {
+    color: gray;
+    font-size: 90%;
+    margin-left: 0.5em;
+}
+
+.groupInfoAdmin .addMatch, .groupInfoAdmin .inviteUser {
+    display: grid;
+    grid-template-columns: auto 153px;
+    grid-gap: 20px;
+    align-items: center;
+    width: 50%;
+}
+
+.groupInfoAdmin .matches {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
+
+.groupInfoAdmin .matches .groupMatchItem {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 0.5em;
+}
+
+.groupInfoAdmin .groupPlayers {
+    display: flex;
+}
+
+.groupInfoAdmin .groupPlayers p {
+    margin: 0 0 0.5em;
+}
+
+.groupInfoAdmin .groupPlayers .admins {
+    margin-left: 10em;
+}
+
+.groupInfoAdmin .groupPlayers .admins .addadmin {
+    display: flex;
+    flex-direction: column;
+}
+
+.groupInfoAdmin .groupPlayers .admins .addadmin select {
+    font-size: 100%;
+    padding: 0.5em;
+    margin: 1em 0 0.5em;
+}
+
+@media only screen and (max-width: 1200px) {
+    .groupInfoAdmin .addMatch {
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .groupInfoAdmin .groupPlayers {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+
+    .groupInfoAdmin .groupPlayers .admins {
+        margin-left: 0;
+        width: fit-content;
+    }
+
+    .groupInfoAdmin .addMatch, .groupInfoAdmin .inviteUser {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .groupInfoAdmin .groupPlayers {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}

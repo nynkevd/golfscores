@@ -1,18 +1,13 @@
 .userResultItem {
     border: #9EC1A3 1px solid;
-    margin: 20px 0;
+}
+
+.userResultItem div p:first-of-type {
+    margin-bottom: 7px;
 }
 
 .userResultItem button {
     margin-top: 1em;
     align-self: center;
     font-size: 90%;
-}
-
-.userResultItem:nth-child(odd) {
-    margin-right: 10px;
-}
-
-.userResultItem:nth-child(even) {
-    margin-left: 10px;
 }
